@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { App } from './App';
 
-test('renders learn react link', () => {
+test('renders handleliste header', () => {
   const { getByText } = render(<App/>);
-  const linkElement = getByText(/hi earth/i);
-  expect(linkElement).toBeInTheDocument();
+  const overskrift = getByText(/handleliste/i);
+  expect(overskrift).toBeInTheDocument();
 });

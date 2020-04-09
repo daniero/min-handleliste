@@ -2,3 +2,8 @@
   margin-top: 40px;
   text-align: center;
 }
+
+.liste {
+  padding: 0;
+  list-style: none;
+}
