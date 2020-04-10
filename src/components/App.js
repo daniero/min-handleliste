@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import css from './App.module.css';
 import { Ting } from "./Ting";
 import { LeggTilTing } from "./LeggTilTing";
+import { Bruker } from "./Bruker";
 
 export const App = () => {
   const [handleliste, setHandleliste] = useState([]);
@@ -13,8 +14,10 @@ export const App = () => {
       oldTing.id === tingId ? callback(oldTing) : oldTing));
   }, [setHandleliste]);
 
+
   return (
     <>
+      <Bruker/>
       <h1>Handleliste</h1>
       <LeggTilTing leggTilTing={leggTilTing}/>
       <ul className={css.liste}>
