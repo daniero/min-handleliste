@@ -13,12 +13,11 @@ const TingComponent = ({
   }));
 
   return (
-    <li
-      className={classnames(css.ting, ting.ferdig && css.ferdig)}
-    >
+    <li className={classnames(css.ting, ting.ferdig && css.ferdig)}>
       <label>
         <input
           type="checkbox"
+          checked={ting.ferdig}
           onChange={toggleTing}
         />
         {ting.tekst}

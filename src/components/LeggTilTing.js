@@ -1,12 +1,10 @@
 import React, { memo } from "react";
 import { getFormData } from "../utils/forms";
-import { v4 as uuid } from "uuid";
 
 const LeggTilTingComponent = ({ leggTilTing }) => {
   function submit(data) {
     if (data.tekst && data.tekst.length > 0) {
       leggTilTing({
-        id: uuid(),
         ferdig: false,
         ...data
       });
