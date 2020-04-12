@@ -1,17 +1,18 @@
-import { auth, database } from './setup';
-import { useEffect, useState } from "react";
+import {auth, database} from './setup';
+import {useEffect, useState} from "react";
+import firebase from "firebase";
 
-let handleliste = [];
+let handleliste: Array<any> = [];
 
-let databaseRef = null;
-const handlelisteListeners = new Set();
+let databaseRef: firebase.database.Reference | null = null;
+const handlelisteListeners = new Set<Function>();
 
-function oppdaterHandleliste(nyHandleliste) {
+function oppdaterHandleliste(nyHandleliste: Array<any>) {
   handleliste = nyHandleliste;
   handlelisteListeners.forEach(listener => listener(nyHandleliste));
 }
 
-function registerHandlelisteListener(listener) {
+function registerHandlelisteListener(listener: Function) {
   handlelisteListeners.add(listener);
   return () => {
     handlelisteListeners.delete(listener);
@@ -57,9 +58,9 @@ auth.onAuthStateChanged(user => {
 
 });
 
-const leggTilTing = (nyTing) => databaseRef.push(nyTing);
+const leggTilTing = (nyTing: any) => databaseRef?.push(nyTing);
 
-const oppdaterTing = (tingId, verdi) => {
+const oppdaterTing = (tingId: string, verdi: any) => {
   let oppdatertTing;
   if (typeof verdi === 'function') {
     const ting = handleliste.find(ting => ting.id === tingId);
@@ -72,7 +73,7 @@ const oppdaterTing = (tingId, verdi) => {
     oppdatertTing = verdi;
   }
 
-  databaseRef.child(tingId).update(oppdatertTing)
+  databaseRef?.child(tingId).update(oppdatertTing)
 };
 
 export const useHandleliste = () => {
