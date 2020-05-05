@@ -5,10 +5,12 @@ import {getFormData} from "../utils/forms";
 
 const LeggTilTingComponent = ({leggTilTing}) => {
   function submit(data) {
-    if (data.tekst && data.tekst.length > 0) {
+    const trimmed = data.tekst.trim();
+    if (trimmed.length > 0) {
       leggTilTing({
-        ferdig: false,
-        ...data
+        ...data,
+        tekst: trimmed,
+        ferdig: false
       });
     }
   }
