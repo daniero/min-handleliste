@@ -1,7 +1,9 @@
-import React, { memo } from "react";
-import { getFormData } from "../utils/forms";
+import React, {memo} from "react";
+import classnames from "classnames";
+import css from './LeggTilTing.module.css';
+import {getFormData} from "../utils/forms";
 
-const LeggTilTingComponent = ({ leggTilTing }) => {
+const LeggTilTingComponent = ({leggTilTing}) => {
   function submit(data) {
     if (data.tekst && data.tekst.length > 0) {
       leggTilTing({
@@ -13,6 +15,7 @@ const LeggTilTingComponent = ({ leggTilTing }) => {
 
   return (
     <form
+      className={css.container}
       autoComplete="off"
       onSubmit={(e) => {
         submit(getFormData(e));
@@ -20,8 +23,17 @@ const LeggTilTingComponent = ({ leggTilTing }) => {
         e.preventDefault();
       }}
     >
-      <input type="text" name="tekst"/>
-      <button type="submit">+</button>
+      <input
+        type="text"
+        name="tekst"
+        className={classnames(css.size, css.input)}
+      />
+      <button
+        type="submit"
+        className={classnames(css.size, css.button)}
+      >
+        +
+      </button>
     </form>
   );
 };

@@ -17,6 +17,7 @@ const TingComponent = ({
       <label>
         <input
           type="checkbox"
+          className={css.checkbox}
           checked={ting.ferdig}
           onChange={toggleTing}
         />

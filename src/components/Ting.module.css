@@ -1,8 +1,19 @@
+.ting {
+    font-size: 1.4em;
+}
+
 .ting:focus-within {
-  background-color: rgba(255, 220, 220, 0.1);
+    background-color: rgba(255, 220, 220, 0.1);
+}
+
+.checkbox {
+    transform: scale(1.8);
+    padding: 5px;
+    margin: 10px;
 }
 
 .ferdig {
-  color: darkgrey;
-  text-decoration: line-through;
+    color: darkgrey;
+    text-decoration: line-through;
+    opacity: 0.75;
 }
