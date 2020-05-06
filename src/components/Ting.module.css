@@ -1,7 +1,9 @@
 .ting {
+    line-height: 1.8;
     font-size: 1.4em;
 }
 
+.ting:hover,
 .ting:focus-within {
     background-color: rgba(255, 220, 220, 0.1);
 }
@@ -9,11 +11,31 @@
 .checkbox {
     transform: scale(1.8);
     padding: 5px;
-    margin: 10px;
+    margin: 0 10px;
 }
 
 .ferdig {
     color: darkgrey;
     text-decoration: line-through;
     opacity: 0.75;
+}
+
+.slett {
+    visibility: hidden;
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    color: #ff544d;
+    font-size: 1em;
+    user-select: none;
+}
+
+.ting:hover > .slett,
+.ting:focus-within > .slett {
+    visibility: visible;
+}
+
+.slett:hover {
+    background-color: #ff544d;
+    color: #282c34;
 }

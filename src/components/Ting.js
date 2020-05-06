@@ -1,16 +1,19 @@
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 import classnames from "classnames";
 import css from "./Ting.module.css";
 
 const TingComponent = ({
                          ting,
-                         oppdaterTing
+                         oppdaterTing,
+                         slettTing
                        }) => {
 
   const toggleTing = () => oppdaterTing(ting.id, oldTing => ({
     ...oldTing,
     ferdig: !oldTing.ferdig
   }));
+
+  const slett = () => slettTing(ting.id);
 
   return (
     <li className={classnames(css.ting, ting.ferdig && css.ferdig)}>
@@ -23,6 +26,12 @@ const TingComponent = ({
         />
         {ting.tekst}
       </label>
+      <button
+        className={css.slett}
+        onClick={slett}
+      >
+        x
+      </button>
     </li>
   );
 };

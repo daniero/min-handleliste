@@ -76,10 +76,14 @@ const oppdaterTing = (tingId: string, verdi: any) => {
   databaseRef?.child(tingId).update(oppdatertTing)
 };
 
+const slettTing = (tingId: string) => {
+  databaseRef?.child(tingId).remove();
+};
+
 export const useHandleliste = () => {
   const [state, setState] = useState(handleliste);
 
   useEffect(() => registerHandlelisteListener(setState), []);
 
-  return { handleliste: state, leggTilTing, oppdaterTing };
+  return { handleliste: state, leggTilTing, oppdaterTing, slettTing };
 };

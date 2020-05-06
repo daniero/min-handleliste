@@ -5,7 +5,7 @@ import { Ting } from "./Ting";
 import { useHandleliste } from "../firebase/useHandleliste";
 
 export const Handleliste = () => {
-  const { handleliste, leggTilTing, oppdaterTing } = useHandleliste();
+  const { handleliste, leggTilTing, oppdaterTing, slettTing } = useHandleliste();
 
   return (
     <>
@@ -18,6 +18,7 @@ export const Handleliste = () => {
             key={ting.id}
             ting={ting}
             oppdaterTing={oppdaterTing}
+            slettTing={slettTing}
           />
         ))}
       </ul>
