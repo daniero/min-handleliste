@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import css from './Login.module.css';
 import { getFormData } from "../utils/forms";
 
 export const Login = ({
-                        signIn
+                        signIn,
+                        signUp
                       }) => {
 
+  const [handling, setHandling] = useState('logginn');
   const [loading, setLoading] = useState(false);
   const [feil, setFeil] = useState(null);
 
-  const loggInn = ({ epost, passord }) => {
+  const loggInn = useCallback(({ epost, passord }) => {
     setFeil(null);
     setLoading(true);
     signIn(epost, passord)
@@ -21,39 +23,121 @@ export const Login = ({
         }
         setLoading(false);
       });
-  };
+  }, [signIn]);
+
+  const opprettKonto = useCallback(({ epost, passord }) => {
+    setFeil(null);
+    setLoading(true);
+    signUp(epost, passord)
+      .catch(error => {
+        setFeil(error.message);
+        setLoading(false);
+      });
+  }, [signUp]);
 
   return (
     <div className={css.container}>
-      {feil && (
-        <div role="alert" className={css.feilmelding}>{feil}</div>
-      )}
-      <form onSubmit={e => {
-        loggInn(getFormData(e));
-        e.preventDefault();
-      }}
+
+      <div
+        className={css.fanelinje}
+        role="tablist"
       >
-        <label htmlFor="epost">E-post</label>
         <input
-          id="epost"
-          name="epost"
-          type="text"
-          required
+          type="radio"
+          role="tab"
+          name="handling"
+          id="logginn"
+          value="logginn"
+          checked={handling === 'logginn'}
+          onChange={() => {
+            setHandling('logginn');
+            setFeil(null)
+          }}
         />
-        <label htmlFor="passord">Passord</label>
+        <label htmlFor="logginn">Logg inn</label>
+
         <input
-          id="passord"
-          name="passord"
-          type="password"
-          required
+          type="radio"
+          name="handling"
+          id="opprett"
+          value="opprett"
+          checked={handling === 'opprett'}
+          onChange={() => {
+            setHandling('opprett');
+            setFeil(null);
+          }}
         />
-        <button
-          type="submit"
-          disabled={loading}
+        <label htmlFor="opprett">Opprett konto</label>
+      </div>
+
+      {handling === 'logginn' && (
+        <form
+          className={css.form}
+          onSubmit={e => {
+            loggInn(getFormData(e));
+            e.preventDefault();
+          }}
         >
-          Logg inn
-        </button>
-      </form>
+          {feil && (
+            <div role="alert" className={css.feilmelding}>{feil}</div>
+          )}
+          <label htmlFor="epost">E-post</label>
+          <input
+            id="epost"
+            name="epost"
+            type="text"
+            required
+          />
+          <label htmlFor="passord">Passord</label>
+          <input
+            id="passord"
+            name="passord"
+            type="password"
+            required
+          />
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            Logg inn
+          </button>
+        </form>
+      )}
+
+      {handling === 'opprett' && (
+        <form
+          className={css.form}
+          onSubmit={e => {
+            opprettKonto(getFormData(e));
+            e.preventDefault();
+          }}
+        >
+          {feil && (
+            <div role="alert" className={css.feilmelding}>{feil}</div>
+          )}
+          <label htmlFor="epost">E-post</label>
+          <input
+            id="epost"
+            name="epost"
+            type="text"
+            required
+          />
+          <label htmlFor="passord">Passord</label>
+          <input
+            id="passord"
+            name="passord"
+            type="password"
+            required
+          />
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            Opprett konto
+          </button>
+        </form>
+      )}
+
     </div>
   );
 };
