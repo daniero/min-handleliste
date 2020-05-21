@@ -57,7 +57,7 @@
     margin-bottom: 30px;
 }
 
-.form button {
+.form > button {
     box-sizing: border-box;
     width: 100%;
     color: white;
@@ -72,6 +72,30 @@
 .form button:disabled {
     background-color: #443f3e;
     border-color: #443f3e;
+}
+
+.passord {
+    position: relative;
+}
+
+.passord > button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    box-sizing: border-box;
+    height: 32px;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.passord > button:hover {
+    text-decoration: underline;
+}
+
+.passord > button.skjulPassard {
+    font-weight: bold;
 }
 
 .feilmelding {

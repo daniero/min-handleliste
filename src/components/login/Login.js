@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import css from './Login.module.css';
-import { getFormData } from "../utils/forms";
+import { getFormData } from "../../utils/forms";
+import { PassordInput } from "./Passord";
 
 export const Login = ({
                         signIn,
@@ -81,6 +82,7 @@ export const Login = ({
           {feil && (
             <div role="alert" className={css.feilmelding}>{feil}</div>
           )}
+
           <label htmlFor="epost">E-post</label>
           <input
             id="epost"
@@ -88,13 +90,10 @@ export const Login = ({
             type="text"
             required
           />
+
           <label htmlFor="passord">Passord</label>
-          <input
-            id="passord"
-            name="passord"
-            type="password"
-            required
-          />
+          <PassordInput id="passord"/>
+
           <button
             type="submit"
             disabled={loading}
@@ -115,6 +114,7 @@ export const Login = ({
           {feil && (
             <div role="alert" className={css.feilmelding}>{feil}</div>
           )}
+
           <label htmlFor="epost">E-post</label>
           <input
             id="epost"
@@ -122,13 +122,10 @@ export const Login = ({
             type="text"
             required
           />
+
           <label htmlFor="passord">Passord</label>
-          <input
-            id="passord"
-            name="passord"
-            type="password"
-            required
-          />
+          <PassordInput id="passord"/>
+
           <button
             type="submit"
             disabled={loading}

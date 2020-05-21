@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bruker } from "./Bruker";
 import { Handleliste } from "./Handleliste";
-import { Login } from "./Login";
+import { Login } from "./login/Login";
 import { useBruker } from "../firebase/useBruker";
 
 export const App = () => {
