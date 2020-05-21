@@ -32,12 +32,17 @@ auth.onAuthStateChanged(user => {
 
   databaseRef = database.ref(`users/${user.uid}/handleliste`);
 
-  databaseRef.on('child_added', snap => {
-    oppdaterHandleliste([...handleliste, {
-      id: snap.key,
-      ...snap.val()
-    }]);
-  });
+  databaseRef.on('child_added',
+    snap => {
+      oppdaterHandleliste([...handleliste, {
+        id: snap.key,
+        ...snap.val()
+      }]);
+    },
+    (error: Error) => {
+      console.warn(error);
+    }
+  );
 
   databaseRef.on('child_changed', snap => {
     const tingId = snap.key;
