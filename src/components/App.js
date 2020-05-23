@@ -7,26 +7,24 @@ import { useBruker } from "../firebase/useBruker";
 export const App = () => {
   const { bruker, loading, signUp, signIn, signOut } = useBruker();
 
-  if (loading) {
-    return 'Vent litt ...';
-  }
-
-  if (!bruker) {
-    return (
-      <Login
-        signUp={signUp}
-        signIn={signIn}
-      />
-    );
-  }
-
   return (
     <>
+      {loading && (
+        'Vent litt ...'
+      )}
+      {!loading && !bruker && (
+        <Login
+          signUp={signUp}
+          signIn={signIn}
+        />
+      )}
+
       <Header
         bruker={bruker}
         signOut={signOut}
       />
-      <Handleliste/>
+      <Handleliste hidden={!bruker}/>
+
     </>
   );
 };

@@ -4,11 +4,11 @@ import { LeggTilTing } from "./LeggTilTing";
 import { Ting } from "./Ting";
 import { useHandleliste } from "../firebase/useHandleliste";
 
-export const Handleliste = () => {
+export const Handleliste = ({ hidden = false }) => {
   const { handleliste, leggTilTing, oppdaterTing, slettTing } = useHandleliste();
 
   return (
-    <>
+    <main hidden={hidden}>
       <LeggTilTing leggTilTing={leggTilTing}/>
 
       <ul className={css.liste}>
@@ -21,6 +21,6 @@ export const Handleliste = () => {
           />
         ))}
       </ul>
-    </>
+    </main>
   );
 };

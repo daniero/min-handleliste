@@ -4,7 +4,7 @@ import css from './Header.module.css';
 const HeaderComponent = ({ bruker, signOut }) => {
 
   return (
-    <div className={css.container}>
+    <header hidden={!bruker} className={css.container}>
       <h1>Handleliste</h1>
       <button className={css.menyknapp}>···</button>
       <div className={css.meny}>
@@ -17,7 +17,7 @@ const HeaderComponent = ({ bruker, signOut }) => {
           Logg ut
         </button>
       </div>
-    </div>
+    </header>
   );
 };
 
