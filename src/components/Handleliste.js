@@ -9,7 +9,6 @@ export const Handleliste = () => {
 
   return (
     <>
-      <h1>Handleliste</h1>
       <LeggTilTing leggTilTing={leggTilTing}/>
 
       <ul className={css.liste}>

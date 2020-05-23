@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bruker } from "./Bruker";
+import { Header } from "./Header";
 import { Handleliste } from "./Handleliste";
 import { Login } from "./login/Login";
 import { useBruker } from "../firebase/useBruker";
@@ -22,7 +22,7 @@ export const App = () => {
 
   return (
     <>
-      <Bruker
+      <Header
         bruker={bruker}
         signOut={signOut}
       />

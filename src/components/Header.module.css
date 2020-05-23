@@ -1,0 +1,31 @@
+.container {
+    margin: 20px 0;
+    position: relative;
+}
+
+.container > h1 {
+    margin: 0;
+}
+
+.menyknapp {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 2em;
+    font-weight: bold;
+    background: transparent;
+    color: white;
+    border: none;
+}
+
+.meny {
+    padding: 5px;
+    display: none;
+    text-align: right;
+    background-color: rgba(255, 220, 220, 0.1);
+}
+
+.container:focus-within > .meny {
+    display: block;
+}
