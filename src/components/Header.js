@@ -1,17 +1,39 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import css from './Header.module.css';
 
-const HeaderComponent = ({ bruker, signOut }) => {
+const HeaderComponent = ({
+                           bruker,
+                           signOut,
+                           visFerdige,
+                           setVisFerdige
+                         }) => {
+
+  const [visMeny, setVisMeny] = useState(false);
 
   return (
     <header hidden={!bruker} className={css.container}>
-      <h1>Handleliste</h1>
-      <button className={css.menyknapp}>···</button>
-      <div className={css.meny}>
+      <div className={css.topp}>
+        <h1>Handleliste</h1>
+        <label>
+          Vis ferdige
+          <input
+            type="checkbox"
+            value={visFerdige}
+            onClick={() => setVisFerdige(vis => !vis)}
+          />
+        </label>
+        <button
+          aria-expanded={visMeny}
+          className={css.menyknapp}
+          onClick={() => setVisMeny(vis => !vis)}
+        >
+          ···
+        </button>
+      </div>
+      <div hidden={!visMeny} className={css.meny}>
         {`Logget inn som ${bruker?.email}`}
         {' '}
         <button
-          tabIndex={-1}
           onClick={signOut}
         >
           Logg ut

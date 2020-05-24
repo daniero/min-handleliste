@@ -4,7 +4,11 @@ import { LeggTilTing } from "./LeggTilTing";
 import { Ting } from "./Ting";
 import { useHandleliste } from "../firebase/useHandleliste";
 
-export const Handleliste = ({ hidden = false }) => {
+export const Handleliste = ({
+                              hidden = false,
+                              visFerdige = false,
+                            }) => {
+
   const { handleliste, leggTilTing, oppdaterTing, slettTing } = useHandleliste();
 
   return (
@@ -12,14 +16,16 @@ export const Handleliste = ({ hidden = false }) => {
       <LeggTilTing leggTilTing={leggTilTing}/>
 
       <ul className={css.liste}>
-        {handleliste.map(ting => (
-          <Ting
-            key={ting.id}
-            ting={ting}
-            oppdaterTing={oppdaterTing}
-            slettTing={slettTing}
-          />
-        ))}
+        {handleliste
+          .filter(ting => visFerdige || !ting.ferdig)
+          .map(ting => (
+            <Ting
+              key={ting.id}
+              ting={ting}
+              oppdaterTing={oppdaterTing}
+              slettTing={slettTing}
+            />
+          ))}
       </ul>
     </main>
   );
