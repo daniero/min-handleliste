@@ -17,13 +17,13 @@ export const Handleliste = ({
 
       <ul className={css.liste}>
         {handleliste
-          .filter(ting => visFerdige || !ting.ferdig)
           .map(ting => (
             <Ting
               key={ting.id}
               ting={ting}
               oppdaterTing={oppdaterTing}
               slettTing={slettTing}
+              visFerdig={visFerdige}
             />
           ))}
       </ul>

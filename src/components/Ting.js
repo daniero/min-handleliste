@@ -1,12 +1,27 @@
-import React, {memo} from 'react';
+import React, { memo } from 'react';
 import classnames from "classnames";
 import css from "./Ting.module.css";
+import { useOnChange } from "../utils/useOnChange";
+import { useTidsbryter } from "../utils/useTidsbryter";
 
 const TingComponent = ({
                          ting,
                          oppdaterTing,
-                         slettTing
+                         slettTing,
+                         visFerdig
                        }) => {
+
+  const [visAllikevel, setVisAllikevel] = useTidsbryter();
+
+  useOnChange(ting.ferdig, (_, next) => {
+    if (next) {
+      setVisAllikevel()
+    }
+  });
+
+  if (ting.ferdig && !visFerdig && !visAllikevel) {
+    return null;
+  }
 
   const toggleTing = () => oppdaterTing(ting.id, oldTing => ({
     ...oldTing,
