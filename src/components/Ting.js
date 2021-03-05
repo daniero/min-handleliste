@@ -12,7 +12,6 @@ const TingComponent = ({
                        }) => {
 
   const [visAllikevel, setVisAllikevel] = useTidsbryter();
-
   useOnChange(ting.ferdig, (_, next) => {
     if (next) {
       setVisAllikevel()

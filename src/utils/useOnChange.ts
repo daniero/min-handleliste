@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
-export const useOnChange = (nextValue, callback) => {
-  const stored = useRef(undefined);
+export function useOnChange<T>(nextValue: T, callback: (current: T, next: T) => any) {
+  const stored = useRef<T | undefined>(undefined);
   const memo = useCallback(callback, []);
 
   useEffect(() => {
@@ -10,4 +10,4 @@ export const useOnChange = (nextValue, callback) => {
     }
     stored.current = nextValue;
   }, [nextValue, memo]);
-};
+}
