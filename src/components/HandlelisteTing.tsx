@@ -7,7 +7,7 @@ import { Ting, TingId } from '../domene/Ting'
 
 interface TingProps {
   ting: Ting,
-  oppdaterTing: (tingId: TingId, oppdater: any) => Ting,
+  oppdaterTing: (tingId: TingId, oppdater: any) => void,
   slettTing: (tingId: TingId) => void,
   visFerdig: boolean
 }
