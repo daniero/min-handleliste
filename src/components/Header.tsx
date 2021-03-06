@@ -1,6 +1,6 @@
 import React, { memo, useReducer } from "react";
 import css from './Header.module.css';
-import { User } from "firebase";
+import { User } from "../firebase/User";
 import { toggle } from "../utils/toggle";
 
 interface Headerprops {
