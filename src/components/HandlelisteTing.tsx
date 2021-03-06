@@ -3,14 +3,23 @@ import classnames from "classnames";
 import css from "./Ting.module.css";
 import { useOnChange } from "../utils/useOnChange";
 import { useTidsbryter } from "../utils/useTidsbryter";
+import { Ting } from '../domene/Ting'
+
+interface TingProps {
+  ting: Ting,
+  oppdaterTing: (tingId: string, oppdater: any) => Ting,
+  slettTing: (tingId: string) => void,
+  visFerdig: boolean
+}
 
 const TingComponent = ({
                          ting,
                          oppdaterTing,
                          slettTing,
                          visFerdig
-                       }) => {
+                       }: TingProps) => {
 
+  // La tingen bli hengende igjen i et sekund før den forsvinner etter at den er krysset av
   const [visAllikevel, setVisAllikevel] = useTidsbryter();
   useOnChange(ting.ferdig, (_, next) => {
     if (next) {
@@ -22,7 +31,7 @@ const TingComponent = ({
     return null;
   }
 
-  const toggleTing = () => oppdaterTing(ting.id, oldTing => ({
+  const toggleTing = () => oppdaterTing(ting.id, (oldTing: Ting) => ({
     ...oldTing,
     ferdig: !oldTing.ferdig
   }));
@@ -50,4 +59,4 @@ const TingComponent = ({
   );
 };
 
-export const Ting = memo(TingComponent);
+export const HandlelisteTing = memo(TingComponent);

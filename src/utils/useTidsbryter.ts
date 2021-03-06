@@ -11,7 +11,7 @@ type Nedtelling = Tilstand | ReturnType<typeof setTimeout>
  * og en aktiveringsfunksjon som endrer verdien til `true` i  `forsinkelse` millisekunder.
  * @param forsinkelse i millisekunder
  */
-export const useTidsbryter = (forsinkelse = 1000) => {
+export const useTidsbryter: (forsinkelse?: number) => [boolean, () => void] = (forsinkelse = 1000) => {
   const [aktivert, setAktivert] = useState(false);
   const nedtelling = useRef<Nedtelling>(Tilstand.Stopp);
 
