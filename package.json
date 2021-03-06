@@ -3,27 +3,28 @@
   "version": "0.1.0",
   "homepage": "https://min-handleliste.surge.sh",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^25.2.1",
-    "@types/node": "^13.11.1",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.6",
-    "classnames": "^2.2.6",
-    "firebase": "^7.14.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "typescript": "^3.8.3"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && react-snapshot",
     "deploy": "npm run build && surge --domain https://min-handleliste.surge.sh build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/classnames": "^2.2.11",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.1",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "classnames": "^2.2.6",
+    "firebase": "^8.2.10",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.3",
+    "typescript": "^4.2.3"
   },
   "eslintConfig": {
     "extends": "react-app"

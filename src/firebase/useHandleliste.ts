@@ -1,8 +1,9 @@
-import {auth, database} from './setup';
-import {useEffect, useState} from "react";
+import { auth, database } from './setup';
+import { useEffect, useState } from "react";
 import firebase from "firebase";
+import { Ting } from "../domene/Ting";
 
-let handleliste: Array<any> = [];
+let handleliste: Ting[] = [];
 
 let databaseRef: firebase.database.Reference | null = null;
 const handlelisteListeners = new Set<Function>();
@@ -85,7 +86,14 @@ const slettTing = (tingId: string) => {
   databaseRef?.child(tingId).remove();
 };
 
-export const useHandleliste = () => {
+interface HandlelisteHook {
+  handleliste: Ting[]
+  leggTilTing: (nyTing: Partial<Ting>) => void
+  oppdaterTing: (tingId: string, verdi: any) => void
+  slettTing: (tingId: string) => void
+}
+
+export const useHandleliste: () => HandlelisteHook = () => {
   const [state, setState] = useState(handleliste);
 
   useEffect(() => registerHandlelisteListener(setState), []);

@@ -1,7 +1,7 @@
 import React from "react";
 import css from "./App.module.css";
 import { LeggTilTing } from "./LeggTilTing";
-import { Ting } from "./Ting";
+import { HandlelisteTing } from "./HandlelisteTing";
 import { useHandleliste } from "../firebase/useHandleliste";
 
 export const Handleliste = ({
@@ -18,7 +18,7 @@ export const Handleliste = ({
       <ul className={css.liste}>
         {handleliste
           .map(ting => (
-            <Ting
+            <HandlelisteTing
               key={ting.id}
               ting={ting}
               oppdaterTing={oppdaterTing}

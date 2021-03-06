@@ -11,7 +11,7 @@ export const App = () => {
 
   return (
     <>
-      {loading || !bruker && (
+      {(loading || !bruker) && (
         <h1 className={css.header}>Handleliste</h1>
       )}
       {!loading && !bruker && (

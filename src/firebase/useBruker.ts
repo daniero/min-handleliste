@@ -1,6 +1,6 @@
-import {auth} from "./setup";
-import {useEffect, useState} from "react";
-import {User} from "firebase";
+import { auth } from "./setup";
+import { useEffect, useState } from "react";
+import { User } from "./User";
 
 export const useBruker = () => {
   const [bruker, setBruker] = useState<User | null>(null);
