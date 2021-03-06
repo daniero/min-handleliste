@@ -1,5 +1,8 @@
+export type TingId = string
+
 export interface Ting {
-  id: string,
+  id: TingId,
   ferdig: boolean,
-  tekst: string
+  tekst: string,
+  sortering?: number
 }

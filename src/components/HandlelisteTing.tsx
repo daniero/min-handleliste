@@ -3,12 +3,12 @@ import classnames from "classnames";
 import css from "./Ting.module.css";
 import { useOnChange } from "../utils/useOnChange";
 import { useTidsbryter } from "../utils/useTidsbryter";
-import { Ting } from '../domene/Ting'
+import { Ting, TingId } from '../domene/Ting'
 
 interface TingProps {
   ting: Ting,
-  oppdaterTing: (tingId: string, oppdater: any) => Ting,
-  slettTing: (tingId: string) => void,
+  oppdaterTing: (tingId: TingId, oppdater: any) => Ting,
+  slettTing: (tingId: TingId) => void,
   visFerdig: boolean
 }
 
