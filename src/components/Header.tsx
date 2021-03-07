@@ -1,10 +1,10 @@
 import React, { memo, useReducer } from "react";
 import css from './Header.module.css';
-import { User } from "../firebase/User";
+import { Bruker } from "../domene/bruker/Bruker";
 import { toggle } from "../utils/toggle";
 
 interface Headerprops {
-  bruker?: User,
+  bruker?: Bruker,
   signOut: () => void,
   visFerdige: boolean,
   setVisFerdige: (vis: (ja: boolean) => boolean) => void
@@ -40,7 +40,7 @@ const HeaderComponent = ({
         </button>
       </div>
       <div hidden={!visMeny} className={css.meny}>
-        {`Logget inn som ${bruker?.email}`}
+        {`Logget inn som ${bruker?.epost}`}
         {' '}
         <button
           onClick={signOut}

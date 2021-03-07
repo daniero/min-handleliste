@@ -1,9 +1,9 @@
 import { auth } from "./setup";
 import { useEffect, useState } from "react";
-import { User } from "./User";
+import { Bruker } from "../domene/bruker/Bruker";
 
 interface BrukerHook {
-  bruker?: User,
+  bruker?: Bruker,
   loading: boolean;
   signUp: (email: string, password: string) => Promise<any>;
   signIn: (email: string, password: string) => Promise<any>;
@@ -11,12 +11,14 @@ interface BrukerHook {
 }
 
 export const useBruker: () => BrukerHook = () => {
-  const [bruker, setBruker] = useState<User | null>(null);
+  const [bruker, setBruker] = useState<Bruker | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => auth.onAuthStateChanged(user => {
     setLoading(false);
-    setBruker(user);
+    setBruker(user && {
+      epost: user.email!
+    });
   }), []);
 
   const signUp = (email: string, password: string) => {
