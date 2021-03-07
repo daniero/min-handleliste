@@ -3,12 +3,12 @@ import classnames from "classnames";
 import css from "./Ting.module.css";
 import { useOnChange } from "../utils/useOnChange";
 import { useTidsbryter } from "../utils/useTidsbryter";
-import { Ting, TingId } from '../domene/Ting'
+import { Ting, TingId } from '../domene/handleliste/Ting'
 
 interface TingProps {
-  ting: Ting,
-  oppdaterTing: (tingId: TingId, oppdater: any) => void,
-  slettTing: (tingId: TingId) => void,
+  ting: Ting
+  oppdaterTing: (id: TingId, oppdatertTing: Partial<Ting>) => void
+  slettTing: (tingId: TingId) => void
   visFerdig: boolean
 }
 
@@ -31,10 +31,9 @@ const TingComponent = ({
     return null;
   }
 
-  const toggleTing = () => oppdaterTing(ting.id, (oldTing: Ting) => ({
-    ...oldTing,
-    ferdig: !oldTing.ferdig
-  }));
+  const toggleTing = () => oppdaterTing(ting.id, {
+    ferdig: !ting.ferdig
+  });
 
   const slett = () => slettTing(ting.id);
 

@@ -2,7 +2,7 @@ import React from "react";
 import css from "./App.module.css";
 import { LeggTilTing } from "./LeggTilTing";
 import { HandlelisteTing } from "./HandlelisteTing";
-import { useHandleliste } from "../firebase/useHandleliste";
+import { useHandleliste } from "../domene/handleliste/useHandleliste";
 
 export const Handleliste = ({
                               hidden = false,

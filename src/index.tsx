@@ -1,13 +1,16 @@
-import './firebase/setup'
 import React from 'react';
 import { render } from 'react-snapshot';
 import './index.css';
 import { App } from './components/App';
 // import * as serviceWorker from './serviceWorker';
+import { HandlelisteProvider } from "./domene/handleliste/HandlelisteProvider";
+import { firebaseHandlelisteServiceImpl } from "./firebase/FirebaseHandlelisteServiceImpl";
 
 render(
   <React.StrictMode>
-    <App/>
+    <HandlelisteProvider handlelisteService={firebaseHandlelisteServiceImpl()}>
+      <App/>
+    </HandlelisteProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
