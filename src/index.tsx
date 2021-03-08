@@ -3,14 +3,23 @@ import { render } from 'react-snapshot';
 import './index.css';
 import { App } from './components/App';
 // import * as serviceWorker from './serviceWorker';
-import { HandlelisteProvider } from "./domene/handleliste/HandlelisteProvider";
+import { Wiring } from "./domene/Avhengigheter";
 import { firebaseHandlelisteServiceImpl } from "./firebase/FirebaseHandlelisteServiceImpl";
+import { setup } from "./firebase/setup";
+import { firebaseBrukerServiceImpl } from "./firebase/FirebaseBrukerServiceImpl";
+
+const firebaseSetup = setup();
+const brukerService = firebaseBrukerServiceImpl(firebaseSetup);
+const handlelisteService = firebaseHandlelisteServiceImpl(firebaseSetup);
 
 render(
   <React.StrictMode>
-    <HandlelisteProvider handlelisteService={firebaseHandlelisteServiceImpl()}>
+    <Wiring
+      brukerService={brukerService}
+      handlelisteService={handlelisteService}
+    >
       <App/>
-    </HandlelisteProvider>
+    </Wiring>
   </React.StrictMode>,
   document.getElementById('root')
 );

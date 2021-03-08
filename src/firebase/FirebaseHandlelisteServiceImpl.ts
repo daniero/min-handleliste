@@ -1,17 +1,21 @@
-import './setup'
-import { auth, database } from "./setup";
-import firebase from "firebase";
+import { DatabaseRef, Setup, Unsubscribe } from "./types";
 import { HandlelisteService } from "../domene/handleliste/HandlelisteService";
 import { Dispatch } from "react";
 import { TingId } from "../domene/handleliste/Ting";
-import { HandlelisteAction, leggTilTing, oppdaterTing, settHandleliste, slettTing } from "../domene/handleliste/handlelisteActions";
+import {
+  HandlelisteAction,
+  leggTilTing,
+  oppdaterTing,
+  settHandleliste,
+  slettTing
+} from "../domene/handleliste/handlelisteActions";
 
-export const firebaseHandlelisteServiceImpl: () => HandlelisteService = () => {
-  // TODO sett igang async import av alt firebase her
-  let databaseRef: firebase.database.Reference | null = null;
+export const firebaseHandlelisteServiceImpl: (setup: Setup) => HandlelisteService = ({ auth, database }) => {
+  let unsubscribe: Unsubscribe;
+  let databaseRef: DatabaseRef | null = null;
   let tingDispatcher: Dispatch<HandlelisteAction> | null = null;
 
-  auth.onAuthStateChanged(user => {
+  unsubscribe = auth.onAuthStateChanged(user => {
     databaseRef?.off();
 
     if (!user) {
@@ -43,7 +47,10 @@ export const firebaseHandlelisteServiceImpl: () => HandlelisteService = () => {
 
   return {
     registerHandler: dispatcher => tingDispatcher = dispatcher,
-    unregisterHandler: _ => tingDispatcher = null,
+    unregisterHandler: () => {
+      unsubscribe();
+      tingDispatcher = null;
+    },
 
     leggTilTing: nyTing => databaseRef?.push(nyTing),
     oppdaterTing: (id, oppdatertTing) => databaseRef?.child(id).update(oppdatertTing),

@@ -1,6 +1,6 @@
 import { Ting, TingId } from "./Ting";
 import { Reducer, useContext, useEffect, useReducer } from "react";
-import { HandlelisteContext } from "./HandlelisteProvider";
+import { Avhengigheter } from "../Avhengigheter";
 import { HandlelisteAction, HandlelisteState } from "./handlelisteActions";
 
 const initialHandleliste: HandlelisteState = [];
@@ -42,7 +42,7 @@ interface HandlelisteHook {
 }
 
 export function useHandleliste(): HandlelisteHook {
-  const handlelisteService = useContext(HandlelisteContext);
+  const { handlelisteService } = useContext(Avhengigheter);
 
   const [handleliste, dispatch] = useReducer(reducer, initialHandleliste);
 

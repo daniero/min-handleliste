@@ -1,16 +1,17 @@
 import { render } from '@testing-library/react';
-import { HandlelisteProvider } from "../domene/handleliste/HandlelisteProvider";
+import { Wiring } from "../domene/Avhengigheter";
 import { handlelisteServiceBasicImpl } from "../domene/handleliste/HandlelisteServiceBasicImpl";
 import { Handleliste } from "./Handleliste";
 
 describe("Handleliste", () => {
   it('renders', () => {
     render(
-      <HandlelisteProvider
+      <Wiring
+        brukerService={null!}
         handlelisteService={handlelisteServiceBasicImpl()}
       >
         <Handleliste/>
-      </HandlelisteProvider>
+      </Wiring>
     );
   });
 

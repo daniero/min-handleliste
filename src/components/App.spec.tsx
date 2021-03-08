@@ -1,15 +1,19 @@
 import { render } from '@testing-library/react';
 import { App } from './App';
-import { HandlelisteProvider } from '../domene/handleliste/HandlelisteProvider';
+import { Wiring } from '../domene/Avhengigheter';
+import { brukerServiceBasicImpl } from "../domene/bruker/BrukerServiceBasicImpl";
 import { handlelisteServiceBasicImpl } from '../domene/handleliste/HandlelisteServiceBasicImpl';
 
 it('renders handleliste header', () => {
   // TODO mock/provide auth/useBruker/useEffect
   // TODO fiks act-warnings
   let tree = render(
-    <HandlelisteProvider handlelisteService={handlelisteServiceBasicImpl()}>
+    <Wiring
+      brukerService={brukerServiceBasicImpl()}
+      handlelisteService={handlelisteServiceBasicImpl()}
+    >
       <App/>
-    </HandlelisteProvider>
+    </Wiring>
   );
 
   const overskrift = tree.getByRole('heading');
