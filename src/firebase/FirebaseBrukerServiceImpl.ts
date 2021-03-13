@@ -1,17 +1,21 @@
 import { Dispatch } from "react";
 import { Bruker } from "../domene/bruker/Bruker";
-import { Setup, Unsubscribe } from "./types";
+import { Auth, Setup, Unsubscribe } from "./types";
 import { BrukerService } from "../domene/bruker/BrukerService";
 
-export const firebaseBrukerServiceImpl: (setup: Setup) => BrukerService = ({ auth }) => {
+export const firebaseBrukerServiceImpl: (setupPromise: Promise<Setup>) => BrukerService = (setupPromise) => {
+  let auth: Auth;
   let unsubscribe: Unsubscribe
   let brukerDispatcher: Dispatch<Bruker | null> | null = null;
 
-  unsubscribe = auth.onAuthStateChanged(user =>
-    brukerDispatcher?.(user && {
-      epost: user.email!
-    })
-  );
+  setupPromise.then((setup) => {
+    auth = setup.auth;
+    unsubscribe = auth.onAuthStateChanged(user =>
+      brukerDispatcher?.(user && {
+        epost: user.email!
+      })
+    );
+  });
 
   return {
     registerHandler: dispatcher => brukerDispatcher = dispatcher,
