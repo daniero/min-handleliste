@@ -59,6 +59,7 @@ export const Login = ({
 
         <input
           type="radio"
+          role="tab"
           name="handling"
           id="opprett"
           value="opprett"

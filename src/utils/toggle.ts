@@ -1,3 +1,3 @@
 import { ReducerWithoutAction } from "react";
 
-export const toggle: ReducerWithoutAction<boolean> = (vis: boolean) => !vis;
+export const toggle: ReducerWithoutAction<boolean> = (on: boolean) => !on;

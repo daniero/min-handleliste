@@ -3,7 +3,7 @@ import classnames from "classnames";
 import css from "./Ting.module.css";
 import { useOnChange } from "../utils/useOnChange";
 import { useTidsbryter } from "../utils/useTidsbryter";
-import { Ting, TingId } from '../domene/handleliste/Ting'
+import { Ting, TingId } from "../domene/handleliste/Ting";
 
 interface TingProps {
   ting: Ting
