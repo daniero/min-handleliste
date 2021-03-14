@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import classnames from "classnames";
 import css from './LeggTilTing.module.css';
 import { getFormData } from "../utils/forms";
-import { Ting } from "../domene/Ting";
+import { Ting } from "../domene/handleliste/Ting";
 
 interface LeggTilTingProps {
   leggTilTing: (nyTing: Partial<Ting>) => void
