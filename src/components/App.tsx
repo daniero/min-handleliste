@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useBruker } from "../domene/bruker/useBruker";
 import { Header } from "./Header";
 import { Handleliste } from "./Handleliste";

@@ -1,4 +1,4 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import { render } from 'react-snapshot';
 import './index.css';
 import { App } from './components/App';
@@ -13,14 +13,14 @@ const brukerService = firebaseBrukerServiceImpl(firebaseSetup);
 const handlelisteService = firebaseHandlelisteServiceImpl(firebaseSetup);
 
 render(
-  <React.StrictMode>
+  <StrictMode>
     <Wiring
       brukerService={brukerService}
       handlelisteService={handlelisteService}
     >
       <App/>
     </Wiring>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 );
 

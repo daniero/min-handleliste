@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import classnames from "classnames";
 import css from "./Ting.module.css";
 import { useOnChange } from "../utils/useOnChange";

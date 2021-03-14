@@ -1,4 +1,3 @@
-import React from "react";
 import css from "./App.module.css";
 import { LeggTilTing } from "./LeggTilTing";
 import { HandlelisteTing } from "./HandlelisteTing";
