@@ -1,4 +1,4 @@
-import type firebase from "firebase";
+import type firebase from "firebase/compat";
 
 export type Auth = firebase.auth.Auth;
 export type Database = firebase.database.Database;

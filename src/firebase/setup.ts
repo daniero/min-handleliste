@@ -14,9 +14,9 @@ const config: () => FirebaseConfig = () => ({
 
 export const setup: () => Promise<Setup> = () => {
   return Promise.all([
-    import(/* webpackChunkName: 'firebase' */ 'firebase/app'),
-    import(/* webpackChunkName: 'firebase' */ 'firebase/auth'),
-    import(/* webpackChunkName: 'firebase' */ 'firebase/database')
+    import(/* webpackChunkName: 'firebase' */ 'firebase/compat/app'),
+    import(/* webpackChunkName: 'firebase' */ 'firebase/compat/auth'),
+    import(/* webpackChunkName: 'firebase' */ 'firebase/compat/database')
   ]).then((imports) => {
     const firebase = imports[0].default
     const app = firebase.initializeApp(config());
