@@ -1,4 +1,4 @@
-import { Auth, Database, DatabaseRef, Setup, Unsubscribe } from "./types";
+import type { FirebaseApp } from "firebase/app";
 import { HandlelisteService } from "../domene/handleliste/HandlelisteService";
 import { Dispatch } from "react";
 import { TingId } from "../domene/handleliste/Ting";
@@ -9,57 +9,84 @@ import {
   settHandleliste,
   slettTing
 } from "../domene/handleliste/handlelisteActions";
+import { getAuth } from "firebase/auth";
+import {
+  child,
+  DatabaseReference,
+  getDatabase,
+  off,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+  push,
+  ref,
+  remove,
+  update
+} from "firebase/database";
 
-export const firebaseHandlelisteServiceImpl: (setup: Promise<Setup>) => HandlelisteService = (setupPromise) => {
-  let auth: Auth;
-  let database: Database;
-  let unsubscribe: Unsubscribe;
-  let databaseRef: DatabaseRef | null = null;
+export const firebaseHandlelisteServiceImpl: (firebaseApp: FirebaseApp) => HandlelisteService = (firebaseApp) => {
   let tingDispatcher: Dispatch<HandlelisteAction> | null = null;
 
-  setupPromise.then((setup) => {
-    auth = setup.auth;
-    database = setup.database;
-    unsubscribe = auth.onAuthStateChanged(user => {
-      databaseRef?.off();
+  const auth = getAuth(firebaseApp);
+  const database = getDatabase(firebaseApp);
 
-      if (!user) {
-        tingDispatcher?.(settHandleliste([]));
-        databaseRef = null;
-        return;
-      }
+  let handlelisteRef: DatabaseReference | null = null;
 
-      databaseRef = database.ref(`users/${user.uid}/handleliste`);
+  const unsubscribeUser = auth.onAuthStateChanged(user => {
+    handlelisteRef && off(handlelisteRef);
 
-      databaseRef.on('child_added',
-        snap => tingDispatcher?.(leggTilTing({
-          id: snap.key,
-          ...snap.val()
-        })),
-        (error: Error) => {
-          console.warn(error);
-        }
-      );
+    if (!user) {
+      tingDispatcher?.(settHandleliste([]));
+      handlelisteRef = null;
+      return;
+    }
 
-      databaseRef.on('child_changed',
-        snap => tingDispatcher?.(oppdaterTing(snap.key as TingId, snap.val()))
-      );
+    handlelisteRef = ref(database, `users/${user.uid}/handleliste`);
 
-      databaseRef.on('child_removed',
-        snap => tingDispatcher?.(slettTing(snap.key as TingId))
-      );
+    onChildAdded(handlelisteRef, snap => {
+      tingDispatcher?.(leggTilTing({
+        id: snap.key,
+        ...snap.val()
+      }));
+    });
+
+    onChildChanged(handlelisteRef, snap => {
+      tingDispatcher?.(oppdaterTing(snap.key as TingId, snap.val()));
+    });
+
+    onChildRemoved(handlelisteRef, snap => {
+      return tingDispatcher?.(slettTing(snap.key as TingId));
     });
   });
-
+  
   return {
-    registerHandler: dispatcher => tingDispatcher = dispatcher,
-    unregisterHandler: () => {
-      unsubscribe();
+    registerHandler(dispatcher) {
+      tingDispatcher = dispatcher;
+    },
+
+    unregisterHandler() {
+      unsubscribeUser();
       tingDispatcher = null;
     },
 
-    leggTilTing: nyTing => databaseRef?.push(nyTing),
-    oppdaterTing: (id, oppdatertTing) => databaseRef?.child(id).update(oppdatertTing),
-    slettTing: id => databaseRef?.child(id).remove()
+    leggTilTing(nyTing) {
+      if (!handlelisteRef) return;
+
+      return push(handlelisteRef, nyTing);
+    },
+
+    oppdaterTing(id, oppdatertTing) {
+      if (!handlelisteRef) return;
+
+      const childRef = child(handlelisteRef, id);
+      return update(childRef, oppdatertTing);
+    },
+
+    slettTing(id) {
+      if (!handlelisteRef) return;
+
+      const childRef = child(handlelisteRef, id);
+      return remove(childRef)
+    }
   }
 }

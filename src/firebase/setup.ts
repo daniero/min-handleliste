@@ -1,7 +1,7 @@
+import { initializeApp } from "firebase/app"
 import { FirebaseConfig } from "./Config";
-import { Setup } from "./types";
 
-const config: () => FirebaseConfig = () => ({
+const config: FirebaseConfig = {
   appId: process.env.REACT_APP_APP_ID!,
   apiKey: process.env.REACT_APP_API_KEY!,
   databaseURL: process.env.REACT_APP_DATABASE_URL!,
@@ -10,20 +10,8 @@ const config: () => FirebaseConfig = () => ({
   // storageBucket: process.env.REACT_APP_STORAGE_BUCKET!,
   // messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID!,
   // measurementId: process.env.REACT_APP_MEASUREMENT_ID
-});
+};
 
-export const setup: () => Promise<Setup> = () => {
-  return Promise.all([
-    import(/* webpackChunkName: 'firebase' */ 'firebase/compat/app'),
-    import(/* webpackChunkName: 'firebase' */ 'firebase/compat/auth'),
-    import(/* webpackChunkName: 'firebase' */ 'firebase/compat/database')
-  ]).then((imports) => {
-    const firebase = imports[0].default
-    const app = firebase.initializeApp(config());
-
-    return {
-      auth: app.auth(),
-      database: app.database()
-    } as Setup
-  });
+export const setup = () => {
+  return initializeApp(config);
 };

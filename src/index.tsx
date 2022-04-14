@@ -4,13 +4,13 @@ import './index.css';
 import { App } from './components/App';
 // import * as serviceWorker from './serviceWorker';
 import { Wiring } from "./domene/Avhengigheter";
-import { firebaseHandlelisteServiceImpl } from "./firebase/FirebaseHandlelisteServiceImpl";
 import { setup } from "./firebase/setup";
+import { firebaseHandlelisteServiceImpl } from "./firebase/FirebaseHandlelisteServiceImpl";
 import { firebaseBrukerServiceImpl } from "./firebase/FirebaseBrukerServiceImpl";
 
-const firebaseSetup = setup();
-const brukerService = firebaseBrukerServiceImpl(firebaseSetup);
-const handlelisteService = firebaseHandlelisteServiceImpl(firebaseSetup);
+const firebaseApp = setup();
+const brukerService = firebaseBrukerServiceImpl(firebaseApp);
+const handlelisteService = firebaseHandlelisteServiceImpl(firebaseApp);
 
 render(
   <StrictMode>
