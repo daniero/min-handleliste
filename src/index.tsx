@@ -5,12 +5,8 @@ import { App } from './components/App';
 // import * as serviceWorker from './serviceWorker';
 import { Wiring } from "./domene/Avhengigheter";
 import { setup } from "./firebase/setup";
-import { firebaseHandlelisteServiceImpl } from "./firebase/FirebaseHandlelisteServiceImpl";
-import { firebaseBrukerServiceImpl } from "./firebase/FirebaseBrukerServiceImpl";
 
-const firebaseApp = setup();
-const brukerService = firebaseBrukerServiceImpl(firebaseApp);
-const handlelisteService = firebaseHandlelisteServiceImpl(firebaseApp);
+const { brukerService, handlelisteService } = setup();
 
 render(
   <StrictMode>
@@ -18,7 +14,7 @@ render(
       brukerService={brukerService}
       handlelisteService={handlelisteService}
     >
-      <App/>
+      <App />
     </Wiring>
   </StrictMode>,
   document.getElementById('root')

@@ -1,18 +1,8 @@
 import type { FirebaseApp } from "firebase/app";
-import { HandlelisteService } from "../domene/handleliste/HandlelisteService";
-import { Dispatch } from "react";
-import { TingId } from "../domene/handleliste/Ting";
-import {
-  HandlelisteAction,
-  leggTilTing,
-  oppdaterTing,
-  settHandleliste,
-  slettTing
-} from "../domene/handleliste/handlelisteActions";
-import { getAuth } from "firebase/auth";
+import type { Auth } from "firebase/auth";
+import type { DatabaseReference } from "firebase/database";
 import {
   child,
-  DatabaseReference,
   getDatabase,
   off,
   onChildAdded,
@@ -23,11 +13,20 @@ import {
   remove,
   update
 } from "firebase/database";
+import type { HandlelisteService } from "../domene/handleliste/HandlelisteService";
+import { Dispatch } from "react";
+import { TingId } from "../domene/handleliste/Ting";
+import {
+  HandlelisteAction,
+  leggTilTing,
+  oppdaterTing,
+  settHandleliste,
+  slettTing
+} from "../domene/handleliste/handlelisteActions";
 
-export const firebaseHandlelisteServiceImpl: (firebaseApp: FirebaseApp) => HandlelisteService = (firebaseApp) => {
+export const firebaseHandlelisteServiceImpl: (firebaseApp: FirebaseApp, auth: Auth) => HandlelisteService = (firebaseApp, auth) => {
   let tingDispatcher: Dispatch<HandlelisteAction> | null = null;
 
-  const auth = getAuth(firebaseApp);
   const database = getDatabase(firebaseApp);
 
   let handlelisteRef: DatabaseReference | null = null;
@@ -58,7 +57,7 @@ export const firebaseHandlelisteServiceImpl: (firebaseApp: FirebaseApp) => Handl
       return tingDispatcher?.(slettTing(snap.key as TingId));
     });
   });
-  
+
   return {
     registerHandler(dispatcher) {
       tingDispatcher = dispatcher;

@@ -1,6 +1,12 @@
-import { initializeApp } from "firebase/app"
-import { config } from "./Config";
-
 export const setup = () => {
-  return initializeApp(config);
-};
+  const loadAuth = import(/* webpackChunkName: 'bruker' */ './setupAuth');
+
+  return {
+    brukerService: loadAuth.then(module => module.brukerService),
+
+    handlelisteService: loadAuth.then(async ({ firebaseApp, auth }) => {
+      const databaseModule = await import(/* webpackChunkName: 'handleliste' */ './FirebaseHandlelisteServiceImpl')
+      return databaseModule.firebaseHandlelisteServiceImpl(firebaseApp, auth)
+    }),
+  }
+}

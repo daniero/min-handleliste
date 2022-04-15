@@ -1,7 +1,7 @@
 import { Ting, TingId } from "./Ting";
 import { Reducer, useContext, useEffect, useReducer } from "react";
-import { Avhengigheter } from "../Avhengigheter";
-import { HandlelisteAction, HandlelisteState } from "./handlelisteActions";
+import { HandlelisteServiceContext } from "../Avhengigheter";
+import type { HandlelisteAction, HandlelisteState } from "./handlelisteActions";
 
 const initialHandleliste: HandlelisteState = [];
 
@@ -42,19 +42,19 @@ interface HandlelisteHook {
 }
 
 export function useHandleliste(): HandlelisteHook {
-  const { handlelisteService } = useContext(Avhengigheter);
+  const handlelisteService = useContext(HandlelisteServiceContext);
 
   const [handleliste, dispatch] = useReducer(reducer, initialHandleliste);
 
   useEffect(() => {
-    handlelisteService.registerHandler(dispatch);
-    return () => handlelisteService.unregisterHandler(dispatch);
+    handlelisteService?.registerHandler(dispatch);
+    return () => handlelisteService?.unregisterHandler(dispatch);
   }, [handlelisteService]);
 
   return {
     handleliste,
-    leggTilTing: handlelisteService.leggTilTing,
-    slettTing: handlelisteService.slettTing,
-    oppdaterTing: handlelisteService.oppdaterTing
+    leggTilTing: (ting) => handlelisteService?.leggTilTing(ting),
+    slettTing: (id) => handlelisteService?.slettTing(id),
+    oppdaterTing: (id, ting) => handlelisteService?.oppdaterTing(id, ting)
   };
 }

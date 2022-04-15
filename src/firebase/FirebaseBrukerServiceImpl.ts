@@ -1,13 +1,12 @@
 import { Dispatch } from "react";
 import { Bruker } from "../domene/bruker/Bruker";
 import { BrukerService } from "../domene/bruker/BrukerService";
-import type { FirebaseApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import type { Auth } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 
-export const firebaseBrukerServiceImpl: (firebaseApp: FirebaseApp) => BrukerService = (firebaseApp) => {
+export const firebaseBrukerServiceImpl: (auth: Auth) => BrukerService = (auth) => {
   let brukerDispatcher: Dispatch<Bruker | null> | null = null;
 
-  const auth = getAuth(firebaseApp)
   const unsubscribe = auth.onAuthStateChanged(user =>
     brukerDispatcher?.(user && {
       epost: user.email!
