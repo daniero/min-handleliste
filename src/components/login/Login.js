@@ -88,7 +88,7 @@ export const Login = ({
           <input
             id="epost"
             name="epost"
-            type="text"
+            type="email"
             required
           />
 
@@ -120,7 +120,7 @@ export const Login = ({
           <input
             id="epost"
             name="epost"
-            type="text"
+            type="email"
             required
           />
 
