@@ -1,6 +1,6 @@
 import { Bruker } from "./Bruker";
 import { Reducer, useContext, useEffect, useReducer } from "react";
-import { Avhengigheter } from "../Avhengigheter";
+import { BrukerServiceContext } from "../Avhengigheter";
 
 interface BrukerHook {
   bruker?: Bruker,
@@ -17,26 +17,26 @@ interface BrukerState {
 
 type BrukerReducer = Reducer<BrukerState, Bruker | null>
 
-const reducer: BrukerReducer = (state: BrukerState, bruker: Bruker | null) => ({
+const reducer: BrukerReducer = (state, bruker) => ({
   laster: false,
   bruker
 });
 
 const initialState = { laster: true, bruker: null };
 
-export const useBruker: () => BrukerHook = () => {
-  const { brukerService } = useContext(Avhengigheter);
-  const [state, dispatch] = useReducer(reducer, initialState);
+export function useBruker() {
+  const brukerService = useContext(BrukerServiceContext);
+  const [brukerState, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    brukerService.registerHandler(dispatch);
-    return () => brukerService.unregisterHandler(dispatch);
-  }, [brukerService, dispatch]);
+    brukerService?.registerHandler(dispatch);
+    return () => brukerService?.unregisterHandler(dispatch);
+  }, [brukerService]);
 
   return {
-    ...state,
-    signUp: brukerService.signUp,
-    signIn: brukerService.signIn,
-    signOut: brukerService.signOut
+    ...brukerState,
+    signUp: brukerService?.signUp,
+    signIn: brukerService?.signIn,
+    signOut: brukerService?.signOut
   } as BrukerHook;
 }

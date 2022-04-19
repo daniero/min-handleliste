@@ -7,8 +7,8 @@ describe("Handleliste", () => {
   it('renders', () => {
     render(
       <Wiring
-        brukerService={null!}
-        handlelisteService={handlelisteServiceBasicImpl()}
+        brukerService={Promise.resolve(null!)}
+        handlelisteService={Promise.resolve(handlelisteServiceBasicImpl())}
       >
         <Handleliste/>
       </Wiring>

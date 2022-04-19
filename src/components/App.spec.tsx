@@ -9,8 +9,8 @@ it('renders handleliste header', () => {
   // TODO fiks act-warnings
   let tree = render(
     <Wiring
-      brukerService={brukerServiceBasicImpl()}
-      handlelisteService={handlelisteServiceBasicImpl()}
+      brukerService={Promise.resolve(brukerServiceBasicImpl())}
+      handlelisteService={Promise.resolve(handlelisteServiceBasicImpl())}
     >
       <App/>
     </Wiring>
