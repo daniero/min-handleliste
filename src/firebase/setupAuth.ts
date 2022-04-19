@@ -1,4 +1,4 @@
-﻿import { config } from "./Config";
+import { config } from "./Config";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { firebaseBrukerServiceImpl } from "./FirebaseBrukerServiceImpl";
