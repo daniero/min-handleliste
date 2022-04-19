@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { render } from 'react-snapshot';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import { App } from './components/App';
 // import * as serviceWorker from './serviceWorker';
@@ -8,7 +8,10 @@ import { setup } from "./firebase/setup";
 
 const { brukerService, handlelisteService } = setup();
 
-render(
+const container = document.getElementById('root');
+const root = createRoot(container!);
+
+root.render(
   <StrictMode>
     <Wiring
       brukerService={brukerService}
@@ -16,8 +19,7 @@ render(
     >
       <App />
     </Wiring>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
