@@ -1,14 +1,10 @@
 import { Dispatch } from "react";
-import { Ting, TingId } from "./Ting";
-import { HandlelisteAction } from "./handlelisteActions";
+import type { HandlelisteAction } from "./handlelisteActions";
+import type { HandlelisteMetoder } from "./handlelisteMetoder";
 
 
-export interface HandlelisteService {
+export interface HandlelisteService extends HandlelisteMetoder {
   registerHandler: (dispatcher: Dispatch<HandlelisteAction>) => void
   unregisterHandler: (dispatcher: Dispatch<HandlelisteAction>) => void
-
-  leggTilTing: (nyTing: Partial<Ting>) => void
-  oppdaterTing: (id: TingId, oppdatertTing: Partial<Ting>) => void
-  slettTing: (id: TingId) => void
 }
 
