@@ -3,7 +3,7 @@ import { Reducer, useContext, useEffect, useReducer } from "react";
 import { BrukerServiceContext } from "../Avhengigheter";
 
 interface BrukerHook {
-  bruker?: Bruker,
+  bruker: Bruker | null,
   laster: boolean;
   signUp: (email: string, password: string) => Promise<any>
   signIn: (email: string, password: string) => Promise<any>
