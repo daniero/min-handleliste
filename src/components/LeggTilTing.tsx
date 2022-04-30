@@ -24,7 +24,7 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
 
   return (
     <form
-      className={css.container}
+      className="flex"
       autoComplete="off"
       onSubmit={(e) => {
         submit(getFormData(e));
@@ -33,7 +33,6 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
       }}
     >
       <input
-        type="text"
         name="tekst"
         className={classnames(css.size, css.input)}
       />

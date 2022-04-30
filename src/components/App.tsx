@@ -11,11 +11,11 @@ export const App = () => {
 
   return (
     <>
-      <header className="my-3 flex flex-wrap justify-between items-center">
+      <header className="my-3 flex flex-wrap gap-2 justify-between items-center">
         <h1 className="text-3xl my-0 font-bold flex-1">Handleliste</h1>
         {bruker && (
           <>
-            <div className="flex-1">
+            <div className="flex-1 basis-auto">
               <label htmlFor="vis-ferdige">Vis ferdige</label>
               <input
                 id="vis-ferdige"
