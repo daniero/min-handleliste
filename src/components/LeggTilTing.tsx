@@ -34,11 +34,11 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
     >
       <input
         name="tekst"
-        className={classnames(css.size, css.input)}
+        className={`${css.size} ${css.input}`}
       />
       <button
         type="submit"
-        className={classnames(css.size, css.button)}
+        className={`${css.size} ${css.button}`}
       >
         +
       </button>

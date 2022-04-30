@@ -39,7 +39,7 @@ const TingComponent = ({
   const slett = () => slettTing(ting.id);
 
   return (
-    <li className={classnames(css.ting, ting.ferdig && css.ferdig)}>
+    <li className={ting.ferdig ? `${css.ting} ${css.ferdig}` : css.ting}>
       <label>
         <input
           type="checkbox"
