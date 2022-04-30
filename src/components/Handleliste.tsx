@@ -1,20 +1,20 @@
-import css from "./App.module.css";
+import { memo } from "react";
 import { LeggTilTing } from "./LeggTilTing";
 import { HandlelisteTing } from "./HandlelisteTing";
 import { useHandleliste } from "../domene/handleliste/useHandleliste";
 
-export const Handleliste = ({
-                              hidden = false,
-                              visFerdige = false,
-                            }) => {
+const HandlelisteComponent = ({
+                                hidden = false,
+                                visFerdige = false,
+                              }) => {
 
   const { handleliste, leggTilTing, oppdaterTing, slettTing } = useHandleliste();
 
   return (
-    <main hidden={hidden}>
-      <LeggTilTing leggTilTing={leggTilTing}/>
+    <div hidden={hidden}>
+      <LeggTilTing leggTilTing={leggTilTing} />
 
-      <ul className={css.liste}>
+      <ul className="p-0 list-none">
         {handleliste
           .map(ting => (
             <HandlelisteTing
@@ -26,6 +26,8 @@ export const Handleliste = ({
             />
           ))}
       </ul>
-    </main>
+    </div>
   );
 };
+
+export const Handleliste = memo(HandlelisteComponent);

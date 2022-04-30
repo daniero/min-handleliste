@@ -1,6 +1,7 @@
-import { Ting, TingId } from "./Ting";
-import { Reducer, useContext, useEffect, useReducer } from "react";
+import { Ting } from "./Ting";
+import { Reducer, useContext, useEffect, useMemo, useReducer } from "react";
 import { HandlelisteServiceContext } from "../Avhengigheter";
+import type { HandlelisteMetoder } from "./handlelisteMetoder";
 import type { HandlelisteAction, HandlelisteState } from "./handlelisteActions";
 
 const initialHandleliste: HandlelisteState = [];
@@ -33,15 +34,7 @@ const reducer: Reducer<HandlelisteState, HandlelisteAction> = (handleliste, acti
   }
 };
 
-interface HandlelisteHook {
-  handleliste: Ting[]
-
-  leggTilTing: (nyTing: Partial<Ting>) => void
-  oppdaterTing: (id: TingId, oppdatertTing: Partial<Ting>) => void
-  slettTing: (tingId: string) => void
-}
-
-export function useHandleliste(): HandlelisteHook {
+export function useHandleliste(): HandlelisteMetoder & { handleliste: Ting[] } {
   const handlelisteService = useContext(HandlelisteServiceContext);
 
   const [handleliste, dispatch] = useReducer(reducer, initialHandleliste);
@@ -51,10 +44,14 @@ export function useHandleliste(): HandlelisteHook {
     return () => handlelisteService?.unregisterHandler(dispatch);
   }, [handlelisteService]);
 
-  return {
-    handleliste,
+  const metoder: HandlelisteMetoder = useMemo(() => ({
     leggTilTing: (ting) => handlelisteService?.leggTilTing(ting),
     slettTing: (id) => handlelisteService?.slettTing(id),
     oppdaterTing: (id, ting) => handlelisteService?.oppdaterTing(id, ting)
+  }), [handlelisteService]);
+
+  return {
+    handleliste,
+    ...metoder,
   };
 }

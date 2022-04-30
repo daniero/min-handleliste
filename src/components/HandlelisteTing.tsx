@@ -3,12 +3,13 @@ import classnames from "classnames";
 import css from "./Ting.module.css";
 import { useOnChange } from "../utils/useOnChange";
 import { useTidsbryter } from "../utils/useTidsbryter";
-import { Ting, TingId } from "../domene/handleliste/Ting";
+import type { Ting } from "../domene/handleliste/Ting";
+import type { HandlelisteMetoder } from "../domene/handleliste/handlelisteMetoder";
 
 interface TingProps {
   ting: Ting
-  oppdaterTing: (id: TingId, oppdatertTing: Partial<Ting>) => void
-  slettTing: (tingId: TingId) => void
+  oppdaterTing: HandlelisteMetoder["oppdaterTing"]
+  slettTing: HandlelisteMetoder["slettTing"]
   visFerdig: boolean
 }
 
@@ -38,7 +39,7 @@ const TingComponent = ({
   const slett = () => slettTing(ting.id);
 
   return (
-    <li className={classnames(css.ting, ting.ferdig && css.ferdig)}>
+    <li className={ting.ferdig ? `${css.ting} ${css.ferdig}` : css.ting}>
       <label>
         <input
           type="checkbox"

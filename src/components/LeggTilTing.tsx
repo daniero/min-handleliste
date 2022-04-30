@@ -2,10 +2,10 @@ import React, { memo } from "react";
 import classnames from "classnames";
 import css from './LeggTilTing.module.css';
 import { getFormData } from "../utils/forms";
-import { Ting } from "../domene/handleliste/Ting";
+import { HandlelisteMetoder } from "../domene/handleliste/handlelisteMetoder";
 
 interface LeggTilTingProps {
-  leggTilTing: (nyTing: Partial<Ting>) => void
+  leggTilTing: HandlelisteMetoder["leggTilTing"]
 }
 
 const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
@@ -24,7 +24,7 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
 
   return (
     <form
-      className={css.container}
+      className="flex"
       autoComplete="off"
       onSubmit={(e) => {
         submit(getFormData(e));
@@ -33,13 +33,12 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
       }}
     >
       <input
-        type="text"
         name="tekst"
-        className={classnames(css.size, css.input)}
+        className={`${css.size} ${css.input}`}
       />
       <button
         type="submit"
-        className={classnames(css.size, css.button)}
+        className={`${css.size} ${css.button}`}
       >
         +
       </button>

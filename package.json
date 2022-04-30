@@ -35,12 +35,15 @@
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
     "@types/react-snapshot": "^1.3.0",
-    "classnames": "^2.3.1",
+    "autoprefixer": "^10.4.4",
+    "cssnano": "^5.1.7",
     "firebase": "^9.6.11",
+    "postcss": "^8.4.12",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "^5.0.1",
     "surge": "^0.23.1",
+    "tailwindcss": "^3.0.24",
     "typescript": "^4.6.3"
   }
 }
