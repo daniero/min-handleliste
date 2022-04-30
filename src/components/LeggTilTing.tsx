@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import classnames from "classnames";
 import css from './LeggTilTing.module.css';
 import { getFormData } from "../utils/forms";
 import { HandlelisteMetoder } from "../domene/handleliste/handlelisteMetoder";
