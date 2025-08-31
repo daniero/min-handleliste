@@ -11,7 +11,8 @@
     "test": "vitest",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && surge --domain https://min-handleliste.surge.sh build"
+    "deploy:prod": "npm run build && surge --domain https://min-handleliste.surge.sh dist",
+    "deploy:test": "npm run build && surge --domain https://min-handleliste-test.surge.sh dist"
   },
   "dependencies": {
     "firebase": "^9.6.11",
