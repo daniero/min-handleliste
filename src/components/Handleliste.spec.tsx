@@ -1,7 +1,7 @@
 import { render, waitFor } from '@testing-library/react';
 import { Wiring } from '../domene/Wiring.tsx';
 import { handlelisteServiceBasicImpl } from '../domene/handleliste/HandlelisteServiceBasicImpl';
-import { Handleliste } from './Handleliste';
+import { Handleliste } from './handleliste/Handleliste.tsx';
 import type { Ting } from '../domene/handleliste/Ting';
 import { describe, expect, it } from 'vitest';
 

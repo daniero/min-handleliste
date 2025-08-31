@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import { useBruker } from '../domene/bruker/useBruker';
 import { Menyknapp } from './Menyknapp';
-import { Handleliste } from './Handleliste';
+import { Handleliste } from './handleliste/Handleliste.tsx';
 import { Login } from './login/Login';
 import { toggle } from '../utils/toggle';
 

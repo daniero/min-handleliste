@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import css from './Ting.module.css';
-import { useOnChange } from '../utils/useOnChange';
-import { useTidsbryter } from '../utils/useTidsbryter';
-import type { Ting } from '../domene/handleliste/Ting';
-import type { HandlelisteMetoder } from '../domene/handleliste/handlelisteMetoder';
+import { useOnChange } from '../../utils/useOnChange.ts';
+import { useTidsbryter } from '../../utils/useTidsbryter.ts';
+import type { Ting } from '../../domene/handleliste/Ting.ts';
+import type { HandlelisteMetoder } from '../../domene/handleliste/handlelisteMetoder.ts';
 
 interface TingProps {
   ting: Ting;

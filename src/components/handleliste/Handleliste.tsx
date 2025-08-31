@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { LeggTilTing } from './LeggTilTing';
-import { HandlelisteTing } from './HandlelisteTing';
-import { useHandleliste } from '../domene/handleliste/useHandleliste';
+import { LeggTilTing } from './LeggTilTing.tsx';
+import { HandlelisteTing } from './HandlelisteTing.tsx';
+import { useHandleliste } from '../../domene/handleliste/useHandleliste.ts';
 
 const HandlelisteComponent = ({ hidden = false, visFerdige = false }) => {
   const { handleliste, leggTilTing, oppdaterTing, slettTing } =
