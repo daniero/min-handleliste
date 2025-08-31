@@ -19,7 +19,7 @@ export const App = () => {
               <label htmlFor="vis-ferdige">Vis ferdige</label>
               <input
                 id="vis-ferdige"
-                className="ml-2"
+                className="ml-2 bg-white"
                 type="checkbox"
                 checked={visFerdige}
                 onChange={toggleVisFerdige}
