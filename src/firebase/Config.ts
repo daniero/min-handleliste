@@ -1,8 +1,8 @@
-import type { FirebaseOptions } from "firebase/app"
+import type { FirebaseOptions } from 'firebase/app';
 
 export const config: FirebaseOptions = {
-  appId: process.env.REACT_APP_APP_ID!,
-  apiKey: process.env.REACT_APP_API_KEY!,
-  databaseURL: process.env.REACT_APP_DATABASE_URL!,
-  projectId: process.env.REACT_APP_PROJECT_ID!,
+  appId: import.meta.env.VITE_APP_ID as string,
+  apiKey: import.meta.env.VITE_API_KEY as string,
+  databaseURL: import.meta.env.VITE_DATABASE_URL as string,
+  projectId: import.meta.env.VITE_PROJECT_ID as string,
 };

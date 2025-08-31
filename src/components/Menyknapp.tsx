@@ -1,22 +1,20 @@
-import React, { useReducer } from "react";
-import { Bruker } from "../domene/bruker/Bruker";
-import { toggle } from "../utils/toggle";
+import React, { useReducer } from 'react';
+import { type Bruker } from '../domene/bruker/Bruker';
+import { toggle } from '../utils/toggle';
 
 interface Headerprops {
-  bruker: Bruker | null,
-  signOut: () => void,
-  className?: string
+  bruker: Bruker | null;
+  signOut: () => void;
+  className?: string;
 }
 
-const MenyknappComponent = ({
-                              bruker,
-                              signOut,
-                            }: Headerprops) => {
+const MenyknappComponent = ({ bruker, signOut }: Headerprops) => {
   const [visMeny, toggleVisMeny] = useReducer(toggle, false);
 
   return (
     <>
       <button
+        type="button"
         aria-label="Vis meny"
         aria-expanded={visMeny}
         aria-haspopup="menu"
@@ -27,8 +25,10 @@ const MenyknappComponent = ({
       </button>
       {visMeny && (
         <div className="basis-full p-1 text-right bg-blue-900">
-          {bruker && `Logget inn som ${bruker?.epost} `}
-          <button onClick={signOut}>Logg ut</button>
+          {bruker && `Logget inn som ${bruker.epost} `}
+          <button type="button" onClick={signOut}>
+            Logg ut
+          </button>
         </div>
       )}
     </>

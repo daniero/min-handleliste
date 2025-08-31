@@ -1,12 +1,16 @@
-export const setup = () => {
-  const loadAuth = import(/* webpackChunkName: 'bruker' */ './setupAuth');
+import type { Tjenester } from '../domene/Avhengigheter.tsx';
+
+export function setup(): Tjenester {
+  const loadAuth = import('./setupAuth');
 
   return {
-    brukerService: loadAuth.then(module => module.brukerService),
+    brukerService: loadAuth.then((module) => module.brukerService),
 
-    handlelisteService: loadAuth.then(async ({ firebaseApp, auth }) => {
-      const databaseModule = await import(/* webpackChunkName: 'handleliste' */ './FirebaseHandlelisteServiceImpl')
-      return databaseModule.firebaseHandlelisteServiceImpl(firebaseApp, auth)
-    }),
-  }
+    handlelisteService: (async () => {
+      const databaseModule = await import('./FirebaseHandlelisteServiceImpl');
+      const { firebaseApp, auth } = await loadAuth;
+
+      return databaseModule.firebaseHandlelisteServiceImpl(firebaseApp, auth);
+    })(),
+  };
 }
