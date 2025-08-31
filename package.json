@@ -15,7 +15,7 @@
     "deploy:test": "npm run build && surge --domain https://min-handleliste-test.surge.sh dist"
   },
   "dependencies": {
-    "firebase": "^9.6.11",
+    "firebase": "^12.2.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
