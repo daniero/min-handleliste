@@ -1,8 +1,8 @@
 import { type FormEvent } from 'react';
 
-export function getFormData(
-  formEvent: FormEvent<HTMLFormElement>,
-): Record<string, File | string> {
+export type FormObject = Record<string, File | string | undefined>;
+
+export function getFormData(formEvent: FormEvent<HTMLFormElement>): FormObject {
   const formData: FormData = new FormData(formEvent.currentTarget);
   const data: Record<string, FormDataEntryValue> = {};
 

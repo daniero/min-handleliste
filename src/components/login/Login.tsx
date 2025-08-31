@@ -85,8 +85,7 @@ export const Login = ({
         <form
           className={css.form}
           onSubmit={(e) => {
-            // @ts-expect-error jada jada todo TODO
-            loggInn(getFormData(e));
+            loggInn(getFormData(e) as { epost: string; passord: string });
             e.preventDefault();
           }}
         >
@@ -112,8 +111,7 @@ export const Login = ({
         <form
           className={css.form}
           onSubmit={(e) => {
-            // @ts-expect-error jada jada todo TODO
-            opprettKonto(getFormData(e));
+            opprettKonto(getFormData(e) as { epost: string; passord: string });
             e.preventDefault();
           }}
         >

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import css from './LeggTilTing.module.css';
-import { getFormData } from '../utils/forms';
+import { type FormObject, getFormData } from '../utils/forms';
 import { type HandlelisteMetoder } from '../domene/handleliste/handlelisteMetoder';
 
 interface LeggTilTingProps {
@@ -8,11 +8,10 @@ interface LeggTilTingProps {
 }
 
 const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
-  function submit(data: Record<string, string | File>) {
-    const trimmed = (data.tekst as string | undefined)?.trim();
+  function submit(data: FormObject) {
+    const trimmed = (data.tekst as string | undefined)?.trim() ?? '';
 
-    // @ts-expect-error kl sdlfkjsdf TODO
-    if (trimmed?.length > 0) {
+    if (trimmed.length > 0) {
       leggTilTing({
         ...data,
         tekst: trimmed,
