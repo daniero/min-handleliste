@@ -5,8 +5,8 @@ import { BrukerServiceContext } from '../Avhengigheter';
 interface BrukerHook {
   bruker: Bruker | null;
   laster: boolean;
-  signUp: (email: string, password: string) => Promise<unknown>;
-  signIn: (email: string, password: string) => Promise<unknown>;
+  signUp: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 

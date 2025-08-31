@@ -1,5 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
-import { Wiring } from '../domene/Avhengigheter';
+import { Wiring } from '../domene/Wiring.tsx';
 import { handlelisteServiceBasicImpl } from '../domene/handleliste/HandlelisteServiceBasicImpl';
 import { Handleliste } from './Handleliste';
 import type { Ting } from '../domene/handleliste/Ting';
