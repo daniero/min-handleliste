@@ -1,13 +1,14 @@
 import { memo } from 'react';
 import css from './LeggTilTing.module.css';
-import { type FormObject, getFormData } from '../utils/forms';
-import { type HandlelisteMetoder } from '../domene/handleliste/handlelisteMetoder';
+import { type FormObject, getFormData } from '../../utils/forms.ts';
+import { type HandlelisteMetoder } from '../../domene/handleliste/handlelisteMetoder.ts';
 
 interface LeggTilTingProps {
   leggTilTing: HandlelisteMetoder['leggTilTing'];
+  className?: string;
 }
 
-const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
+const LeggTilTingComponent = ({ leggTilTing, className }: LeggTilTingProps) => {
   function submit(data: FormObject) {
     const trimmed = (data.tekst as string | undefined)?.trim() ?? '';
 
@@ -22,7 +23,7 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
 
   return (
     <form
-      className="flex"
+      className={'flex' + (className != null ? ' ' + className : '')}
       autoComplete="off"
       onSubmit={(e) => {
         submit(getFormData(e));

@@ -1,8 +1,8 @@
 import { render, waitFor } from '@testing-library/react';
-import { Wiring } from '../domene/Wiring.tsx';
-import { handlelisteServiceBasicImpl } from '../domene/handleliste/HandlelisteServiceBasicImpl';
-import { Handleliste } from './Handleliste';
-import type { Ting } from '../domene/handleliste/Ting';
+import { Wiring } from '../../domene/Wiring.tsx';
+import { handlelisteServiceBasicImpl } from '../../domene/handleliste/HandlelisteServiceBasicImpl.ts';
+import { Handleliste } from './Handleliste.tsx';
+import type { Ting } from '../../domene/handleliste/Ting.ts';
 import { describe, expect, it } from 'vitest';
 
 function renderHandleliste(initalHandleliste: Partial<Ting>[]) {

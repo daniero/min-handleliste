@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
-import { App } from './App';
-import { Wiring } from '../domene/Wiring.tsx';
-import { brukerServiceBasicImpl } from '../domene/bruker/BrukerServiceBasicImpl';
-import { handlelisteServiceBasicImpl } from '../domene/handleliste/HandlelisteServiceBasicImpl';
+import { App } from './App.tsx';
+import { Wiring } from './domene/Wiring.tsx';
+import { brukerServiceBasicImpl } from './domene/bruker/BrukerServiceBasicImpl.ts';
+import { handlelisteServiceBasicImpl } from './domene/handleliste/HandlelisteServiceBasicImpl.ts';
 import { expect, it } from 'vitest';
 
 it('renders handleliste header', () => {

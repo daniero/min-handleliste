@@ -4,7 +4,7 @@ import { HandlelisteServiceContext } from '../Avhengigheter';
 import type { HandlelisteMetoder } from './handlelisteMetoder';
 import type { HandlelisteAction, HandlelisteState } from './handlelisteActions';
 
-const initialHandleliste: HandlelisteState = [];
+const initialHandleliste: HandlelisteState = [] as const;
 
 const reducer: Reducer<HandlelisteState, HandlelisteAction> = (
   handleliste,
