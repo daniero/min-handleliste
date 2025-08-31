@@ -1,19 +1,19 @@
 .size {
-    box-sizing: border-box;
-    height: 1.4em;
-    font-size: 1.4em;
+  box-sizing: border-box;
+  height: 1.4em;
+  font-size: 1.4em;
 }
 
 .input {
-    flex: 1 1 auto;
-    width: 0;
+  flex: 1 1 auto;
+  width: 0;
 }
 
 .input::placeholder {
-    color: silver;
+  color: silver;
 }
 
 .button {
-    flex: none;
-    width: 1.4em;
+  flex: none;
+  width: 1.4em;
 }

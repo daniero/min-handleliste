@@ -1,9 +1,9 @@
 import { useReducer } from 'react';
-import { useBruker } from "../domene/bruker/useBruker";
-import { Menyknapp } from "./Menyknapp";
-import { Handleliste } from "./Handleliste";
-import { Login } from "./login/Login";
-import { toggle } from "../utils/toggle";
+import { useBruker } from '../domene/bruker/useBruker';
+import { Menyknapp } from './Menyknapp';
+import { Handleliste } from './Handleliste';
+import { Login } from './login/Login';
+import { toggle } from '../utils/toggle';
 
 export const App = () => {
   const { bruker, laster, signUp, signIn, signOut } = useBruker();
@@ -25,25 +25,14 @@ export const App = () => {
                 onChange={toggleVisFerdige}
               />
             </div>
-            <Menyknapp
-              bruker={bruker}
-              signOut={signOut}
-            />
+            <Menyknapp bruker={bruker} signOut={() => void signOut()} />
           </>
         )}
       </header>
 
       <main>
-        {!laster && !bruker && (
-          <Login
-            signUp={signUp}
-            signIn={signIn}
-          />
-        )}
-        <Handleliste
-          hidden={!bruker}
-          visFerdige={visFerdige}
-        />
+        {!laster && !bruker && <Login signUp={signUp} signIn={signIn} />}
+        <Handleliste hidden={!bruker} visFerdige={visFerdige} />
       </main>
     </>
   );

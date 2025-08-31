@@ -1,6 +1,9 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from 'react';
 
-export function useOnChange<T>(nextValue: T, callback: (current: T, next: T) => void) {
+export function useOnChange<T>(
+  nextValue: T,
+  callback: (current: T, next: T) => void,
+) {
   const stored = useRef<T | undefined>(undefined);
   // FIXME
   // eslint-disable-next-line react-hooks/exhaustive-deps

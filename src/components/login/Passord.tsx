@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import css from "./Login.module.css";
+import { useState } from 'react';
+import css from './Login.module.css';
 
-export const PassordInput = ({
-                               id
-                             }) => {
-
+export const PassordInput = ({ id }: { id: string }) => {
   const [visPassord, setVisPassord] = useState(false);
 
   return (
@@ -20,7 +17,9 @@ export const PassordInput = ({
         type="button"
         aria-controls={id}
         aria-expanded={visPassord}
-        onClick={() => setVisPassord(vis => !vis)}
+        onClick={() => {
+          setVisPassord((vis) => !vis);
+        }}
         className={visPassord ? css.skjulPassard : undefined}
       >
         {visPassord ? 'Skjul' : 'Vis'}

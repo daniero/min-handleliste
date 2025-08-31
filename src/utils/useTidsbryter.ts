@@ -1,17 +1,20 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
+// @ts-expect-error enum ikke tillatt
 enum Tilstand {
-  Stopp = -1
+  Stopp = -1,
 }
 
-type Nedtelling = Tilstand | ReturnType<typeof setTimeout>
+type Nedtelling = Tilstand | ReturnType<typeof setTimeout>;
 
 /**
  * Returnerer en boolsk verdi, initielt `false`,
  * og en aktiveringsfunksjon som endrer verdien til `true` i  `forsinkelse` millisekunder.
  * @param forsinkelse i millisekunder
  */
-export const useTidsbryter: (forsinkelse?: number) => [boolean, () => void] = (forsinkelse = 1000) => {
+export const useTidsbryter: (forsinkelse?: number) => [boolean, () => void] = (
+  forsinkelse = 1000,
+) => {
   const [aktivert, setAktivert] = useState(false);
   const nedtelling = useRef<Nedtelling>(Tilstand.Stopp);
 
@@ -23,9 +26,9 @@ export const useTidsbryter: (forsinkelse?: number) => [boolean, () => void] = (f
     setAktivert(true);
     nedtelling.current = setTimeout(() => {
       setAktivert(false);
-      nedtelling.current = Tilstand.Stopp
+      nedtelling.current = Tilstand.Stopp;
     }, forsinkelse);
   };
 
-  return [aktivert, aktiver]
+  return [aktivert, aktiver];
 };

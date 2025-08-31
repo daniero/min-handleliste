@@ -1,48 +1,57 @@
 import { useCallback, useState } from 'react';
 import css from './Login.module.css';
-import { getFormData } from "../../utils/forms";
-import { PassordInput } from "./Passord";
+import { getFormData } from '../../utils/forms';
+import { PassordInput } from './Passord';
 
 export const Login = ({
-                        signIn,
-                        signUp
-                      }) => {
-
+  signIn,
+  signUp,
+}: {
+  signIn: (epost: string, passord: string) => Promise<unknown>;
+  signUp: (epost: string, passord: string) => Promise<unknown>;
+}) => {
   const [handling, setHandling] = useState('logginn');
   const [loading, setLoading] = useState(false);
-  const [feil, setFeil] = useState(null);
+  const [feil, setFeil] = useState<string | null>(null);
 
-  const loggInn = useCallback(({ epost, passord }) => {
-    setFeil(null);
-    setLoading(true);
-    signIn(epost, passord)
-      .catch(error => {
+  const loggInn = useCallback(
+    ({ epost, passord }: { epost: string; passord: string }) => {
+      setFeil(null);
+      setLoading(true);
+
+      signIn(epost, passord).catch((error: unknown) => {
+        // @ts-expect-error TODO code er udefinert men det funker
         if (error.code === 'auth/wrong-password') {
           setFeil('Ukjent epost eller ukorrekt passord');
         } else {
+          // @ts-expect-error TODO message er udefinert men det funker
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setFeil(error.message);
         }
         setLoading(false);
       });
-  }, [signIn]);
+    },
+    [signIn],
+  );
 
-  const opprettKonto = useCallback(({ epost, passord }) => {
-    setFeil(null);
-    setLoading(true);
-    signUp(epost, passord)
-      .catch(error => {
+  const opprettKonto = useCallback(
+    ({ epost, passord }: { epost: string; passord: string }) => {
+      setFeil(null);
+      setLoading(true);
+
+      signUp(epost, passord).catch((error: unknown) => {
+        // @ts-expect-error TODO message er udefinert men det funker
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setFeil(error.message);
         setLoading(false);
       });
-  }, [signUp]);
+    },
+    [signUp],
+  );
 
   return (
     <div className={css.container}>
-
-      <div
-        className={css.fanelinje}
-        role="tablist"
-      >
+      <div className={css.fanelinje} role="tablist">
         <input
           type="radio"
           role="tab"
@@ -52,7 +61,7 @@ export const Login = ({
           checked={handling === 'logginn'}
           onChange={() => {
             setHandling('logginn');
-            setFeil(null)
+            setFeil(null);
           }}
         />
         <label htmlFor="logginn">Logg inn</label>
@@ -75,30 +84,25 @@ export const Login = ({
       {handling === 'logginn' && (
         <form
           className={css.form}
-          onSubmit={e => {
+          onSubmit={(e) => {
+            // @ts-expect-error jada jada todo TODO
             loggInn(getFormData(e));
             e.preventDefault();
           }}
         >
-          {feil && (
-            <div role="alert" className={css.feilmelding}>{feil}</div>
+          {feil != null && (
+            <div role="alert" className={css.feilmelding}>
+              {feil}
+            </div>
           )}
 
           <label htmlFor="epost">E-post</label>
-          <input
-            id="epost"
-            name="epost"
-            type="email"
-            required
-          />
+          <input id="epost" name="epost" type="email" required />
 
           <label htmlFor="passord">Passord</label>
-          <PassordInput id="passord"/>
+          <PassordInput id="passord" />
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
+          <button type="submit" disabled={loading}>
             Logg inn
           </button>
         </form>
@@ -107,35 +111,29 @@ export const Login = ({
       {handling === 'opprett' && (
         <form
           className={css.form}
-          onSubmit={e => {
+          onSubmit={(e) => {
+            // @ts-expect-error jada jada todo TODO
             opprettKonto(getFormData(e));
             e.preventDefault();
           }}
         >
-          {feil && (
-            <div role="alert" className={css.feilmelding}>{feil}</div>
+          {feil != null && (
+            <div role="alert" className={css.feilmelding}>
+              {feil}
+            </div>
           )}
 
           <label htmlFor="epost">E-post</label>
-          <input
-            id="epost"
-            name="epost"
-            type="email"
-            required
-          />
+          <input id="epost" name="epost" type="email" required />
 
           <label htmlFor="passord">Passord</label>
-          <PassordInput id="passord"/>
+          <PassordInput id="passord" />
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
+          <button type="submit" disabled={loading}>
             Opprett konto
           </button>
         </form>
       )}
-
     </div>
   );
 };

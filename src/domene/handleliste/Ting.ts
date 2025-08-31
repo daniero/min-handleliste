@@ -1,8 +1,8 @@
-export type TingId = string
+export type TingId = string;
 
 export interface Ting {
-  id: TingId,
-  ferdig: boolean,
-  tekst: string,
-  sortering?: number
+  id: TingId;
+  ferdig: boolean;
+  tekst: string;
+  sortering?: number;
 }

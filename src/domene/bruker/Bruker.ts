@@ -1,3 +1,3 @@
 export interface Bruker {
-  epost: string
+  epost: string;
 }

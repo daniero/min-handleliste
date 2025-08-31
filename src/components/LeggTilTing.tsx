@@ -1,22 +1,22 @@
-import React, { memo } from "react";
+import { memo } from 'react';
 import css from './LeggTilTing.module.css';
-import { getFormData } from "../utils/forms";
-import { HandlelisteMetoder } from "../domene/handleliste/handlelisteMetoder";
+import { getFormData } from '../utils/forms';
+import { type HandlelisteMetoder } from '../domene/handleliste/handlelisteMetoder';
 
 interface LeggTilTingProps {
-  leggTilTing: HandlelisteMetoder["leggTilTing"]
+  leggTilTing: HandlelisteMetoder['leggTilTing'];
 }
 
 const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
-
   function submit(data: Record<string, string | File>) {
-    const trimmed = (data.tekst as string)?.trim();
+    const trimmed = (data.tekst as string | undefined)?.trim();
 
-    if (trimmed.length > 0) {
+    // @ts-expect-error kl sdlfkjsdf TODO
+    if (trimmed?.length > 0) {
       leggTilTing({
         ...data,
         tekst: trimmed,
-        ferdig: false
+        ferdig: false,
       });
     }
   }
@@ -31,14 +31,8 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
         e.preventDefault();
       }}
     >
-      <input
-        name="tekst"
-        className={`${css.size} ${css.input}`}
-      />
-      <button
-        type="submit"
-        className={`${css.size} ${css.button}`}
-      >
+      <input name="tekst" className={`${css.size} ${css.input}`} />
+      <button type="submit" className={`${css.size} ${css.button}`}>
         +
       </button>
     </form>

@@ -1,35 +1,46 @@
-import { createContext, ReactChild, useEffect, useState } from "react";
-import { HandlelisteService } from "./handleliste/HandlelisteService";
-import { BrukerService } from "./bruker/BrukerService";
+import {
+  createContext,
+  type PropsWithChildren,
+  useEffect,
+  useState,
+} from 'react';
+import { type HandlelisteService } from './handleliste/HandlelisteService';
+import { type BrukerService } from './bruker/BrukerService';
 
 interface Tjenester {
-  brukerService: Promise<BrukerService>
-  handlelisteService: Promise<HandlelisteService>
+  brukerService: Promise<BrukerService>;
+  handlelisteService: Promise<HandlelisteService>;
 }
 
-export const BrukerServiceContext = createContext<BrukerService | null>(null)
-export const HandlelisteServiceContext = createContext<HandlelisteService | null>(null)
+// TODO
+// eslint-disable-next-line react-refresh/only-export-components
+export const BrukerServiceContext = createContext<BrukerService | null>(null);
+// eslint-disable-next-line react-refresh/only-export-components
+export const HandlelisteServiceContext =
+  createContext<HandlelisteService | null>(null);
 
 function usePromisedValue<T>(promise: Promise<T>) {
   const [value, setValue] = useState<T | null>(null);
 
   useEffect(() => {
-    promise.then(setValue);
-  }, [promise])
+    void promise.then(setValue);
+  }, [promise]);
 
   return value;
 }
 
-export const Wiring = ({ children, ...services }: { children: ReactChild } & Tjenester) => {
-
+export const Wiring = ({
+  children,
+  ...services
+}: PropsWithChildren<Tjenester>) => {
   const brukerService = usePromisedValue(services.brukerService);
   const handlelisteService = usePromisedValue(services.handlelisteService);
 
   return (
-    <BrukerServiceContext.Provider value={brukerService}>
-      <HandlelisteServiceContext.Provider value={handlelisteService}>
+    <BrukerServiceContext value={brukerService}>
+      <HandlelisteServiceContext value={handlelisteService}>
         {children}
-      </HandlelisteServiceContext.Provider>
-    </BrukerServiceContext.Provider>
+      </HandlelisteServiceContext>
+    </BrukerServiceContext>
   );
 };

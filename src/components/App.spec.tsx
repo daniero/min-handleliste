@@ -1,24 +1,25 @@
 import { render } from '@testing-library/react';
 import { App } from './App';
 import { Wiring } from '../domene/Avhengigheter';
-import { brukerServiceBasicImpl } from "../domene/bruker/BrukerServiceBasicImpl";
+import { brukerServiceBasicImpl } from '../domene/bruker/BrukerServiceBasicImpl';
 import { handlelisteServiceBasicImpl } from '../domene/handleliste/HandlelisteServiceBasicImpl';
+import { expect, it } from 'vitest';
 
 it('renders handleliste header', () => {
   // TODO mock/provide auth/useBruker/useEffect
   // TODO fiks act-warnings
-  let tree = render(
+  const tree = render(
     <Wiring
       brukerService={Promise.resolve(brukerServiceBasicImpl())}
       handlelisteService={Promise.resolve(handlelisteServiceBasicImpl())}
     >
-      <App/>
-    </Wiring>
+      <App />
+    </Wiring>,
   );
 
   const overskrift = tree.getByRole('heading');
 
-  expect(overskrift).toHaveTextContent("Handleliste")
+  expect(overskrift).toHaveTextContent('Handleliste');
 });
 
 // TODO test når auth er mocket/providet:
