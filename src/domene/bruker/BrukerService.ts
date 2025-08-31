@@ -5,7 +5,7 @@ export interface BrukerService {
   registerHandler: (dispatcher: Dispatch<Bruker | null>) => void;
   unregisterHandler: (dispatcher: Dispatch<Bruker | null>) => void;
 
-  signUp: (email: string, password: string) => Promise<unknown>;
-  signIn: (email: string, password: string) => Promise<unknown>;
+  signUp: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 }

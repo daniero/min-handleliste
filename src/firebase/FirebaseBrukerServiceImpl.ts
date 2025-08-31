@@ -2,6 +2,7 @@ import type { Dispatch } from 'react';
 import type { Bruker } from '../domene/bruker/Bruker';
 import type { BrukerService } from '../domene/bruker/BrukerService';
 import type { Auth } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -27,22 +28,39 @@ export const firebaseBrukerServiceImpl: (auth: Auth) => BrukerService = (
       brukerDispatcher = null;
     },
 
-    signUp: (email, password) =>
-      createUserWithEmailAndPassword(auth, email, password).catch(
-        (error: unknown) => {
-          // @ts-expect-error TODO code er udefinert men det funker
-          if (error.code === 'auth/wrong-password') {
-            throw Error('Ukjent epost eller ukorrekt passord');
-          } else {
-            // @ts-expect-error TODO message er udefinert men det funker
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            throw Error(error.message);
+    signUp: async (email, password) => {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          switch (error.code) {
+            case 'auth/wrong-password':
+              throw Error('Ukjent epost eller ukorrekt passord');
+            case 'auth/email-already-in-use':
+              throw Error('Epost-adressen er allerede i bruk');
           }
-        },
-      ),
+        }
 
-    signIn: (email, password) =>
-      signInWithEmailAndPassword(auth, email, password),
+        console.error(error);
+        throw Error('Det oppstod en ukjent feil');
+      }
+    },
+
+    signIn: async (email, password) => {
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (error: unknown) {
+        if (
+          error instanceof FirebaseError &&
+          error.code === 'auth/wrong-password'
+        ) {
+          throw Error('Ukjent epost eller ukorrekt passord');
+        }
+
+        console.error(error);
+        throw Error('Det oppstod en ukjent feil');
+      }
+    },
 
     signOut: () => auth.signOut(),
   };

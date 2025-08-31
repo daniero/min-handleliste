@@ -2,13 +2,14 @@ import { useCallback, useState } from 'react';
 import css from './Login.module.css';
 import { getFormData } from '../../utils/forms';
 import { PassordInput } from './Passord';
+import type { BrukerService } from '../../domene/bruker/BrukerService.ts';
 
 export const Login = ({
   signIn,
   signUp,
 }: {
-  signIn: (epost: string, passord: string) => Promise<unknown>;
-  signUp: (epost: string, passord: string) => Promise<unknown>;
+  signIn: BrukerService['signIn'];
+  signUp: BrukerService['signUp'];
 }) => {
   const [handling, setHandling] = useState('logginn');
   const [loading, setLoading] = useState(false);
@@ -20,13 +21,10 @@ export const Login = ({
       setLoading(true);
 
       signIn(epost, passord).catch((error: unknown) => {
-        // @ts-expect-error TODO code er udefinert men det funker
-        if (error.code === 'auth/wrong-password') {
-          setFeil('Ukjent epost eller ukorrekt passord');
-        } else {
-          // @ts-expect-error TODO message er udefinert men det funker
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        if (error instanceof Error) {
           setFeil(error.message);
+        } else {
+          setFeil('Det oppstod en ukjent feil');
         }
         setLoading(false);
       });
@@ -40,9 +38,11 @@ export const Login = ({
       setLoading(true);
 
       signUp(epost, passord).catch((error: unknown) => {
-        // @ts-expect-error TODO message er udefinert men det funker
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        setFeil(error.message);
+        if (error instanceof Error) {
+          setFeil(error.message);
+        } else {
+          setFeil('Det oppstod en ukjent feil');
+        }
         setLoading(false);
       });
     },
