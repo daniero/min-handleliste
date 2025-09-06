@@ -76,21 +76,21 @@ export const firebaseHandlelisteServiceImpl: (
     leggTilTing(nyTing) {
       if (!handlelisteRef) return;
 
-      return void push(handlelisteRef, nyTing);
+      void push(handlelisteRef, nyTing);
     },
 
     oppdaterTing(id, oppdatertTing) {
       if (!handlelisteRef) return;
 
       const childRef = child(handlelisteRef, id);
-      return void update(childRef, oppdatertTing);
+      void update(childRef, oppdatertTing);
     },
 
     slettTing(id) {
       if (!handlelisteRef) return;
 
       const childRef = child(handlelisteRef, id);
-      return void remove(childRef);
+      void remove(childRef);
     },
   };
 };
