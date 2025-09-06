@@ -1,39 +1,22 @@
-import { useReducer } from 'react';
 import { useBruker } from '../domene/bruker/useBruker';
 import { Menyknapp } from './Menyknapp';
 import { Handleliste } from './handleliste/Handleliste.tsx';
 import { Login } from './login/Login';
-import { toggle } from '../utils/toggle';
 
 export const App = () => {
   const { bruker, laster, signUp, signIn, signOut } = useBruker();
-  const [visFerdige, toggleVisFerdige] = useReducer(toggle, false);
 
   return (
-    <>
-      <header className="my-3 flex flex-wrap gap-2 justify-between items-center">
-        <h1 className="text-3xl my-0 font-bold flex-1">Handleliste</h1>
-        {bruker && (
-          <>
-            <div className="flex-1 basis-auto">
-              <label htmlFor="vis-ferdige">Vis ferdige</label>
-              <input
-                id="vis-ferdige"
-                className="ml-2 bg-white"
-                type="checkbox"
-                checked={visFerdige}
-                onChange={toggleVisFerdige}
-              />
-            </div>
-            <Menyknapp bruker={bruker} signOut={() => void signOut()} />
-          </>
-        )}
+    <div className="flex flex-col h-screen mx-2">
+      <header className="flex-0 flex flex-wrap items-center">
+        <h1 className="text-3xl my-3 font-bold flex-1">Handleliste</h1>
+        {bruker && <Menyknapp bruker={bruker} signOut={() => void signOut()} />}
       </header>
 
-      <main>
+      <main className={'flex flex-1'}>
         {!laster && !bruker && <Login signUp={signUp} signIn={signIn} />}
-        <Handleliste hidden={!bruker} visFerdige={visFerdige} />
+        <Handleliste hidden={!bruker} />
       </main>
-    </>
+    </div>
   );
 };

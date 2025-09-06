@@ -22,7 +22,7 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
 
   return (
     <form
-      className="flex"
+      className="flex flex-0"
       autoComplete="off"
       onSubmit={(e) => {
         submit(getFormData(e));

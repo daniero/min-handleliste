@@ -21,10 +21,15 @@ const MenyknappComponent = ({ bruker, signOut }: Headerprops) => {
         className="bg-transparent border-none text-white text-3xl font-bold"
         onClick={toggleVisMeny}
       >
-        <span role="presentation">...</span>
+        <span
+          role="presentation"
+          className={`block ${visMeny ? ' rotate-270 mr-3' : ''}`}
+        >
+          ...
+        </span>
       </button>
       {visMeny && (
-        <div className="basis-full p-1 text-right bg-blue-900">
+        <div className="basis-full p-2 mb-5 text-right bg-blue-900">
           {bruker && `Logget inn som ${bruker.epost} `}
           <button type="button" onClick={signOut}>
             Logg ut
