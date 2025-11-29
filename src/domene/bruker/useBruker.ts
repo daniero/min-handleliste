@@ -1,12 +1,10 @@
 import { type Bruker } from './Bruker';
 import { use, useSyncExternalStore } from 'react';
 import { BrukerServiceContext } from '../Avhengigheter';
+import type { BrukerMetoder } from './BrukerService.ts';
 
-interface BrukerHook {
+interface BrukerHook extends BrukerMetoder {
   bruker: Bruker | null;
-  signUp: (email: string, password: string) => Promise<void>;
-  signIn: (email: string, password: string) => Promise<void>;
-  signOut: () => Promise<void>;
 }
 
 export function useBruker() {

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import css from './LeggTilTing.module.css';
 import { type FormObject, getFormData } from '../../utils/forms.ts';
-import { type HandlelisteMetoder } from '../../domene/handleliste/handlelisteMetoder.ts';
+import type { HandlelisteMetoder } from '../../domene/handleliste/HandlelisteService.ts';
 
 interface LeggTilTingProps {
   leggTilTing: HandlelisteMetoder['leggTilTing'];
