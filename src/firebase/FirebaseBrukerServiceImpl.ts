@@ -12,6 +12,8 @@ import { createStore } from '../utils/store.ts';
 const auth = getAuth(firebaseApp);
 const { store, update } = createStore<Bruker | null>(null);
 
+export const ready = auth.authStateReady();
+
 auth.onAuthStateChanged((user) => {
   update(
     () =>
