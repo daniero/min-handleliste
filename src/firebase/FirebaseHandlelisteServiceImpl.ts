@@ -1,5 +1,4 @@
-import type { FirebaseApp } from 'firebase/app';
-import type { Auth } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import type { DatabaseReference } from 'firebase/database';
 import {
   child,
@@ -14,83 +13,81 @@ import {
   update,
 } from 'firebase/database';
 import type { HandlelisteService } from '../domene/handleliste/HandlelisteService';
-import { type Dispatch } from 'react';
 import {
-  type HandlelisteAction,
   leggTilTing,
   oppdaterTing,
-  settHandleliste,
   slettTing,
 } from '../domene/handleliste/handlelisteActions';
 import type { Ting } from '../domene/handleliste/Ting.ts';
+import { firebaseApp } from './Config.ts';
+import { createStore } from '../utils/store.ts';
+import { handlelisteReducer } from '../domene/handleliste/handlelisteReducer.ts';
 
-export const firebaseHandlelisteServiceImpl: (
-  firebaseApp: FirebaseApp,
-  auth: Auth,
-) => HandlelisteService = (firebaseApp, auth) => {
-  let tingDispatcher: Dispatch<HandlelisteAction> | null = null;
+const auth = getAuth(firebaseApp);
+const database = getDatabase(firebaseApp);
+const { store, update: updateStore } = createStore<Ting[]>([]);
 
-  const database = getDatabase(firebaseApp);
+let handlelisteRef: DatabaseReference | null = null;
 
-  let handlelisteRef: DatabaseReference | null = null;
+auth.onAuthStateChanged((user) => {
+  if (handlelisteRef) off(handlelisteRef);
 
-  const unsubscribeUser = auth.onAuthStateChanged((user) => {
-    if (handlelisteRef) off(handlelisteRef);
+  if (!user) {
+    updateStore(() => []);
+    handlelisteRef = null;
+    return;
+  }
 
-    if (!user) {
-      tingDispatcher?.(settHandleliste([]));
-      handlelisteRef = null;
-      return;
-    }
+  handlelisteRef = ref(database, `users/${user.uid}/handleliste`);
 
-    handlelisteRef = ref(database, `users/${user.uid}/handleliste`);
-
-    onChildAdded(handlelisteRef, (snap) => {
-      tingDispatcher?.(
+  onChildAdded(handlelisteRef, (snap) => {
+    updateStore((oldState) =>
+      handlelisteReducer(
+        oldState,
         leggTilTing({
           id: snap.key!,
           ...(snap.val() as Omit<Ting, 'id'>),
         }),
-      );
-    });
-
-    onChildChanged(handlelisteRef, (snap) => {
-      tingDispatcher?.(oppdaterTing(snap.key!, snap.val() as Omit<Ting, 'id'>));
-    });
-
-    onChildRemoved(handlelisteRef, (snap) => {
-      return tingDispatcher?.(slettTing(snap.key!));
-    });
+      ),
+    );
   });
 
-  return {
-    registerHandler(dispatcher) {
-      tingDispatcher = dispatcher;
-    },
+  onChildChanged(handlelisteRef, (snap) => {
+    updateStore((oldState) =>
+      handlelisteReducer(
+        oldState,
+        oppdaterTing(snap.key!, snap.val() as Omit<Ting, 'id'>),
+      ),
+    );
+  });
 
-    unregisterHandler() {
-      unsubscribeUser();
-      tingDispatcher = null;
-    },
+  onChildRemoved(handlelisteRef, (snap) => {
+    updateStore((oldState) =>
+      handlelisteReducer(oldState, slettTing(snap.key!)),
+    );
+  });
+});
 
-    leggTilTing(nyTing) {
-      if (!handlelisteRef) return;
+export const firebaseHandlelisteServiceImpl: HandlelisteService = {
+  ...store,
 
-      void push(handlelisteRef, nyTing);
-    },
+  leggTilTing(nyTing) {
+    if (!handlelisteRef) return;
 
-    oppdaterTing(id, oppdatertTing) {
-      if (!handlelisteRef) return;
+    void push(handlelisteRef, nyTing);
+  },
 
-      const childRef = child(handlelisteRef, id);
-      void update(childRef, oppdatertTing);
-    },
+  oppdaterTing(id, oppdatertTing) {
+    if (!handlelisteRef) return;
 
-    slettTing(id) {
-      if (!handlelisteRef) return;
+    const childRef = child(handlelisteRef, id);
+    void update(childRef, oppdatertTing);
+  },
 
-      const childRef = child(handlelisteRef, id);
-      void remove(childRef);
-    },
-  };
+  slettTing(id) {
+    if (!handlelisteRef) return;
+
+    const childRef = child(handlelisteRef, id);
+    void remove(childRef);
+  },
 };

@@ -1,8 +1,5 @@
-import { type Dispatch } from 'react';
-import type { HandlelisteAction } from './handlelisteActions';
 import type { HandlelisteMetoder } from './handlelisteMetoder';
+import type { Store } from '../../utils/store.ts';
+import type { Ting } from './Ting.ts';
 
-export interface HandlelisteService extends HandlelisteMetoder {
-  registerHandler: (dispatcher: Dispatch<HandlelisteAction>) => void;
-  unregisterHandler: (dispatcher: Dispatch<HandlelisteAction>) => void;
-}
+export type HandlelisteService = Store<Ting[]> & HandlelisteMetoder;

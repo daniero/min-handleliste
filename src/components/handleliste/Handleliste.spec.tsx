@@ -4,14 +4,13 @@ import { handlelisteServiceBasicImpl } from '../../domene/handleliste/Handlelist
 import { Handleliste } from './Handleliste.tsx';
 import type { Ting } from '../../domene/handleliste/Ting.ts';
 import { describe, expect, it } from 'vitest';
+import { brukerServiceBasicImpl } from '../../domene/bruker/BrukerServiceBasicImpl.ts';
 
 function renderHandleliste(initalHandleliste: Partial<Ting>[]) {
   return render(
     <Wiring
-      brukerService={Promise.resolve(null!)}
-      handlelisteService={Promise.resolve(
-        handlelisteServiceBasicImpl(initalHandleliste),
-      )}
+      brukerService={brukerServiceBasicImpl()}
+      handlelisteService={handlelisteServiceBasicImpl(initalHandleliste)}
     >
       <Handleliste />
     </Wiring>,

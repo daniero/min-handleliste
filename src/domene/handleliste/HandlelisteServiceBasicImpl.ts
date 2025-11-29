@@ -1,51 +1,51 @@
 import { type HandlelisteService } from './HandlelisteService';
-import { type Dispatch } from 'react';
 import { type Ting } from './Ting';
-import {
-  type HandlelisteAction,
-  leggTilTing,
-  settHandleliste,
-  oppdaterTing,
-  slettTing,
-} from './handlelisteActions';
+import { leggTilTing, oppdaterTing, slettTing } from './handlelisteActions';
+import { createStore } from '../../utils/store.ts';
+import { handlelisteReducer } from './handlelisteReducer.ts';
 
 let nextId = 1;
-let tingDispatcher: Dispatch<HandlelisteAction> | null = null;
 
 export function handlelisteServiceBasicImpl(
   initalHandleliste: Partial<Ting>[] = [],
 ): HandlelisteService {
+  const { store, update: updateStore } = createStore<Ting[]>(
+    initalHandleliste.map(
+      (ting) =>
+        ({
+          id: nextId++,
+          tekst: 'default tekst',
+          ferdig: false,
+          ...ting,
+        }) as Ting,
+    ),
+  );
+
   return {
-    registerHandler(dispatcher) {
-      tingDispatcher = dispatcher;
-      dispatcher(
-        settHandleliste(
-          initalHandleliste.map(
-            (ting) =>
-              ({
-                id: nextId++,
-                tekst: 'default tekst',
-                ferdig: false,
-                ...ting,
-              }) as Ting,
-          ),
+    ...store,
+
+    leggTilTing: (nyTing) => {
+      updateStore((oldState) =>
+        handlelisteReducer(
+          oldState,
+          leggTilTing({
+            id: (nextId++).toString(),
+            ...nyTing,
+          } as Ting),
         ),
       );
     },
 
-    unregisterHandler: () => (tingDispatcher = null),
+    oppdaterTing: (id, oppdatertTing) => {
+      updateStore((oldState) =>
+        handlelisteReducer(oldState, oppdaterTing(id, oppdatertTing)),
+      );
+    },
 
-    leggTilTing: (nyTing) =>
-      tingDispatcher?.(
-        leggTilTing({
-          id: (nextId++).toString(),
-          ...nyTing,
-        } as Ting),
-      ),
-
-    oppdaterTing: (id, oppdatertTing) =>
-      tingDispatcher?.(oppdaterTing(id, oppdatertTing)),
-
-    slettTing: (tingId) => tingDispatcher?.(slettTing(tingId)),
+    slettTing: (tingId) => {
+      updateStore((oldState) =>
+        handlelisteReducer(oldState, slettTing(tingId)),
+      );
+    },
   };
 }

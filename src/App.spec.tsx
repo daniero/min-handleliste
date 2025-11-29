@@ -6,12 +6,10 @@ import { handlelisteServiceBasicImpl } from './domene/handleliste/HandlelisteSer
 import { expect, it } from 'vitest';
 
 it('renders handleliste header', () => {
-  // TODO mock/provide auth/useBruker/useEffect
-  // TODO fiks act-warnings
   const tree = render(
     <Wiring
-      brukerService={Promise.resolve(brukerServiceBasicImpl())}
-      handlelisteService={Promise.resolve(handlelisteServiceBasicImpl())}
+      brukerService={brukerServiceBasicImpl()}
+      handlelisteService={handlelisteServiceBasicImpl()}
     >
       <App />
     </Wiring>,
