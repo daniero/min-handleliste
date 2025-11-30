@@ -1,7 +1,5 @@
-import { memo } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import css from './Ting.module.css';
-import { useOnChange } from '../../utils/useOnChange.ts';
-import { useTidsbryter } from '../../utils/useTidsbryter.ts';
 import type { Ting } from '../../domene/handleliste/Ting.ts';
 
 import type { HandlelisteMetoder } from '../../domene/handleliste/HandlelisteService.ts';
@@ -13,28 +11,50 @@ interface TingProps {
   visFerdig: boolean;
 }
 
+// Hvor lenge skal tingen vises etter at status endres til ferdig?
+const hengetid = 1500;
+
 const TingComponent = ({
   ting,
   oppdaterTing,
   slettTing,
   visFerdig,
 }: TingProps) => {
-  // La tingen bli hengende igjen i et sekund før den forsvinner etter at den er krysset av
-  const [visAllikevel, setVisAllikevel] = useTidsbryter();
-
-  useOnChange(ting.ferdig, (_, next) => {
-    if (next) {
-      setVisAllikevel();
-    }
+  const [vis, setVis] = useState(() => {
+    return (
+      !ting.ferdig ||
+      (ting.ferdigDato != null && Date.now() - ting.ferdigDato <= hengetid)
+    );
   });
 
-  if (ting.ferdig && !visFerdig && !visAllikevel) {
+  const timeout = useRef<unknown>(null);
+
+  useEffect(() => {
+    if (!ting.ferdig) {
+      setVis(true);
+      clearTimeout(timeout.current as number);
+    } else if (ting.ferdigDato != null) {
+      const ferdigTid = Date.now() - ting.ferdigDato;
+
+      if (ferdigTid <= hengetid) {
+        const visningstid = hengetid - ferdigTid;
+
+        setVis(true);
+        timeout.current = setTimeout(() => {
+          setVis(false);
+        }, visningstid)!;
+      }
+    }
+  }, [ting.ferdig, ting.ferdigDato]);
+
+  if (!vis && !visFerdig) {
     return null;
   }
 
   const toggleTing = () => {
     oppdaterTing(ting.id, {
       ferdig: !ting.ferdig,
+      ferdigDato: Date.now(),
     });
   };
 
