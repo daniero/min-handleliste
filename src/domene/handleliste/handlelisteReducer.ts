@@ -8,7 +8,6 @@ export const handlelisteReducer: Reducer<
   HandlelisteState,
   HandlelisteAction
 > = (handleliste, action) => {
-  console.log(action);
   switch (action.type) {
     case 'LEGG_TIL': {
       return [...handleliste, action.nyTing];

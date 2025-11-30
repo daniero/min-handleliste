@@ -16,6 +16,7 @@ import type { HandlelisteService } from '../domene/handleliste/HandlelisteServic
 import {
   leggTilTing,
   oppdaterTing,
+  settHandleliste,
   slettTing,
 } from '../domene/handleliste/handlelisteActions';
 import type { Ting } from '../domene/handleliste/Ting.ts';
@@ -25,7 +26,7 @@ import { handlelisteReducer } from '../domene/handleliste/handlelisteReducer.ts'
 
 const auth = getAuth(firebaseApp);
 const database = getDatabase(firebaseApp);
-const { store, update: updateStore } = createStore<Ting[]>([]);
+const { store, update: updateStore } = createStore([], handlelisteReducer);
 
 let handlelisteRef: DatabaseReference | null = null;
 
@@ -33,7 +34,7 @@ auth.onAuthStateChanged((user) => {
   if (handlelisteRef) off(handlelisteRef);
 
   if (!user) {
-    updateStore(() => []);
+    updateStore(settHandleliste([]));
     handlelisteRef = null;
     return;
   }
@@ -41,30 +42,20 @@ auth.onAuthStateChanged((user) => {
   handlelisteRef = ref(database, `users/${user.uid}/handleliste`);
 
   onChildAdded(handlelisteRef, (snap) => {
-    updateStore((oldState) =>
-      handlelisteReducer(
-        oldState,
-        leggTilTing({
-          id: snap.key!,
-          ...(snap.val() as Omit<Ting, 'id'>),
-        }),
-      ),
+    updateStore(
+      leggTilTing({
+        id: snap.key!,
+        ...(snap.val() as Omit<Ting, 'id'>),
+      }),
     );
   });
 
   onChildChanged(handlelisteRef, (snap) => {
-    updateStore((oldState) =>
-      handlelisteReducer(
-        oldState,
-        oppdaterTing(snap.key!, snap.val() as Omit<Ting, 'id'>),
-      ),
-    );
+    updateStore(oppdaterTing(snap.key!, snap.val() as Omit<Ting, 'id'>));
   });
 
   onChildRemoved(handlelisteRef, (snap) => {
-    updateStore((oldState) =>
-      handlelisteReducer(oldState, slettTing(snap.key!)),
-    );
+    updateStore(slettTing(snap.key!));
   });
 });
 

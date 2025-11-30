@@ -7,19 +7,18 @@ import {
 import { FirebaseError } from 'firebase/app';
 import type { BrukerService } from '../domene/bruker/BrukerService';
 import type { Bruker } from '../domene/bruker/Bruker.ts';
-import { createStore } from '../utils/store.ts';
+import { createStore, set } from '../utils/store.ts';
 
 const auth = getAuth(firebaseApp);
-const { store, update } = createStore<Bruker | null>(null);
+const { store, update } = createStore(null, set<Bruker | null>);
 
 export const ready = auth.authStateReady();
 
 auth.onAuthStateChanged((user) => {
   update(
-    () =>
-      user && {
-        epost: user.email!,
-      },
+    user && {
+      epost: user.email!,
+    },
   );
 });
 

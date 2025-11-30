@@ -7,10 +7,10 @@ import { handlelisteReducer } from './handlelisteReducer.ts';
 let nextId = 1;
 
 export function handlelisteServiceBasicImpl(
-  initalHandleliste: Partial<Ting>[] = [],
+  initialHandleliste: Partial<Ting>[] = [],
 ): HandlelisteService {
-  const { store, update: updateStore } = createStore<Ting[]>(
-    initalHandleliste.map(
+  const { store, update } = createStore(
+    initialHandleliste.map(
       (ting) =>
         ({
           id: nextId++,
@@ -19,33 +19,27 @@ export function handlelisteServiceBasicImpl(
           ...ting,
         }) as Ting,
     ),
+    handlelisteReducer,
   );
 
   return {
     ...store,
 
     leggTilTing: (nyTing) => {
-      updateStore((oldState) =>
-        handlelisteReducer(
-          oldState,
-          leggTilTing({
-            id: (nextId++).toString(),
-            ...nyTing,
-          } as Ting),
-        ),
+      update(
+        leggTilTing({
+          id: (nextId++).toString(),
+          ...nyTing,
+        } as Ting),
       );
     },
 
     oppdaterTing: (id, oppdatertTing) => {
-      updateStore((oldState) =>
-        handlelisteReducer(oldState, oppdaterTing(id, oppdatertTing)),
-      );
+      update(oppdaterTing(id, oppdatertTing));
     },
 
     slettTing: (tingId) => {
-      updateStore((oldState) =>
-        handlelisteReducer(oldState, slettTing(tingId)),
-      );
+      update(slettTing(tingId));
     },
   };
 }
