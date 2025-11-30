@@ -50,7 +50,7 @@ export const Login = ({
   );
 
   return (
-    <div className="w-[90%] self-center mt-20">
+    <div className="mt-20 w-[90%] self-center">
       <div className={css.fanelinje} role="tablist">
         <input
           type="radio"

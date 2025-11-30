@@ -18,18 +18,18 @@ const MenyknappComponent = ({ bruker, signOut }: Headerprops) => {
         aria-label="Vis meny"
         aria-expanded={visMeny}
         aria-haspopup="menu"
-        className="bg-transparent border-none text-white text-3xl font-bold"
+        className="border-none bg-transparent text-3xl font-bold text-white"
         onClick={toggleVisMeny}
       >
         <span
           role="presentation"
-          className={`block ${visMeny ? ' rotate-270 mr-3' : ''}`}
+          className={`block ${visMeny ? 'mr-3 rotate-270' : ''}`}
         >
           ...
         </span>
       </button>
       {visMeny && (
-        <div className="basis-full p-2 mb-5 text-right bg-blue-900">
+        <div className="mb-2 basis-full bg-blue-900 p-2 text-right">
           {bruker && `Logget inn som ${bruker.epost} `}
           <button type="button" onClick={signOut}>
             Logg ut

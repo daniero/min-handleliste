@@ -13,9 +13,9 @@ export const App = () => {
   const { leggTilTing } = useHandleliste();
 
   return (
-    <div className="fixed inset-0 flex flex-col sm:py-5 sm:px-8">
-      <header className="flex-0 flex px-2 flex-wrap items-center">
-        <h1 className="text-3xl sm:my-3 my-1 font-bold flex-1">Handleliste</h1>
+    <div className="container">
+      <header className="main-header">
+        <h1>Handleliste</h1>
         {bruker && <Menyknapp bruker={bruker} signOut={() => void signOut()} />}
       </header>
 
@@ -23,10 +23,10 @@ export const App = () => {
         <Login signUp={signUp} signIn={signIn} />
       ) : (
         <>
-          <article className="order-2 sm:order-1 box-border p-2">
+          <article className="order-2 box-border p-2 sm:order-1">
             <LeggTilTing leggTilTing={leggTilTing} />
 
-            <div className="flex-0 order-2">
+            <div className="order-2 flex-0">
               <label htmlFor="vis-ferdige">Vis ferdige</label>
               <input
                 id="vis-ferdige"

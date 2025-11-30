@@ -15,6 +15,7 @@
     "deploy:test": "npm run build && surge --domain https://min-handleliste-test.surge.sh dist"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "firebase": "^12.2.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
@@ -35,7 +36,8 @@
     "eslint-plugin-react-x": "^1.52.9",
     "globals": "^16.3.0",
     "jsdom": "^26.1.0",
-    "prettier": "3.6.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.7.1",
     "surge": "^0.24.6",
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2",

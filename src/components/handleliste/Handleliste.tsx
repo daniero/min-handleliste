@@ -10,8 +10,8 @@ function HandlelisteComponent({ visFerdige = false }: Props) {
   const { handleliste, oppdaterTing, slettTing } = useHandleliste();
 
   return (
-    <div className="flex-1 overflow-auto relative order-1">
-      <ul className="p-0 m-0 list-none flex-1 overflow-y-auto order-0 sm:order-3 sm:mb-0">
+    <div className="relative order-1 flex-1 overflow-auto">
+      <ul className="order-0 m-0 flex-1 list-none overflow-y-auto p-0 sm:order-3 sm:mb-0">
         {handleliste.map((ting) => (
           <HandlelisteTing
             key={ting.id}

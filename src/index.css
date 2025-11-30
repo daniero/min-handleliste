@@ -2,6 +2,8 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @layer theme, base, components, utilities;
 
+@custom-variant hocus (&:hover, &:focus-within, &:active);
+
 body {
   color: white;
   margin: 0;
@@ -13,12 +15,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
-  max-width: 800px;
-  margin: 0 auto;
+.container {
+  @apply fixed inset-0 mx-auto box-border flex max-w-[800px] flex-col sm:px-8 sm:py-5;
 }
 
-code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+.main-header {
+  @apply mb-2 flex flex-0 flex-wrap items-center border-b-2 border-slate-600 px-2 py-1 sm:border-0;
+
+  h1 {
+    @apply my-1 flex-1 text-3xl font-bold sm:my-3;
+  }
 }
