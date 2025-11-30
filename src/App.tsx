@@ -23,10 +23,10 @@ export const App = () => {
         <Login signUp={signUp} signIn={signIn} />
       ) : (
         <>
-          <article className="order-2 box-border p-2 sm:order-1">
+          <article className="order-2 mt-2 border-t-2 border-slate-600 px-2 pt-3 sm:order-1 sm:m-0 sm:border-0 sm:py-0">
             <LeggTilTing leggTilTing={leggTilTing} />
 
-            <div className="order-2 flex-0">
+            <div className="order-2 flex-0 py-3">
               <label htmlFor="vis-ferdige">Vis ferdige</label>
               <input
                 id="vis-ferdige"

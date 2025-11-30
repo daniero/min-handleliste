@@ -1,14 +1,12 @@
 import { memo } from 'react';
-import css from './LeggTilTing.module.css';
 import { type FormObject, getFormData } from '../../utils/forms.ts';
 import type { HandlelisteMetoder } from '../../domene/handleliste/HandlelisteService.ts';
 
 interface LeggTilTingProps {
   leggTilTing: HandlelisteMetoder['leggTilTing'];
-  className?: string;
 }
 
-const LeggTilTingComponent = ({ leggTilTing, className }: LeggTilTingProps) => {
+const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
   function submit(data: FormObject) {
     const trimmed = (data.tekst as string | undefined)?.trim() ?? '';
 
@@ -23,7 +21,7 @@ const LeggTilTingComponent = ({ leggTilTing, className }: LeggTilTingProps) => {
 
   return (
     <form
-      className={'flex' + (className != null ? ' ' + className : '')}
+      className="flex gap-2"
       autoComplete="off"
       onSubmit={(e) => {
         submit(getFormData(e));
@@ -31,8 +29,15 @@ const LeggTilTingComponent = ({ leggTilTing, className }: LeggTilTingProps) => {
         e.preventDefault();
       }}
     >
-      <input name="tekst" className={`${css.size} ${css.input}`} />
-      <button type="submit" className={`${css.size} ${css.button}`}>
+      <input
+        name="tekst"
+        placeholder="Legg til ting ..."
+        className="box-border h-8 w-full flex-1 px-1 text-2xl placeholder:text-gray-400"
+      />
+      <button
+        type="submit"
+        className="w-10 rounded-none border-none bg-slate-300"
+      >
         +
       </button>
     </form>
