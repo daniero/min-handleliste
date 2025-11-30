@@ -1,27 +1,21 @@
-import { type PropsWithChildren, useEffect, useState } from 'react';
+import { type PropsWithChildren } from 'react';
 import {
   BrukerServiceContext,
   HandlelisteServiceContext,
-  type Tjenester,
 } from './Avhengigheter.tsx';
+import type { BrukerService } from './bruker/BrukerService.ts';
+import type { HandlelisteService } from './handleliste/HandlelisteService.ts';
 
-function usePromisedValue<T>(promise: Promise<T>) {
-  const [value, setValue] = useState<T | null>(null);
-
-  useEffect(() => {
-    void promise.then(setValue);
-  }, [promise]);
-
-  return value;
+export interface Tjenester {
+  brukerService: BrukerService;
+  handlelisteService: HandlelisteService;
 }
 
-export const Wiring = ({
+export function Wiring({
+  brukerService,
+  handlelisteService,
   children,
-  ...services
-}: PropsWithChildren<Tjenester>) => {
-  const brukerService = usePromisedValue(services.brukerService);
-  const handlelisteService = usePromisedValue(services.handlelisteService);
-
+}: PropsWithChildren<Tjenester>) {
   return (
     <BrukerServiceContext value={brukerService}>
       <HandlelisteServiceContext value={handlelisteService}>
@@ -29,4 +23,4 @@ export const Wiring = ({
       </HandlelisteServiceContext>
     </BrukerServiceContext>
   );
-};
+}

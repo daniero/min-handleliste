@@ -1,19 +1,16 @@
-import { type Dispatch } from 'react';
-import { type Bruker } from './Bruker';
 import { type BrukerService } from './BrukerService';
+import { createStore } from '../../utils/store.ts';
+import type { Bruker } from './Bruker.ts';
 
-export const brukerServiceBasicImpl: () => BrukerService = () => {
-  let _dispatcher: Dispatch<Bruker | null> | null = null;
+export function brukerServiceBasicImpl(): BrukerService {
+  const { store } = createStore<Bruker>({
+    epost: 'test@example.com',
+  });
 
   return {
-    registerHandler: (dispatcher: Dispatch<Bruker | null>) => {
-      _dispatcher = dispatcher;
-      _dispatcher({ epost: 'test@example.com' });
-    },
-    unregisterHandler: () => (_dispatcher = null),
-
+    ...store,
     signUp: () => Promise.resolve(),
     signIn: () => Promise.resolve(),
     signOut: () => Promise.resolve(),
-  } as BrukerService;
-};
+  };
+}

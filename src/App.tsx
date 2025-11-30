@@ -8,7 +8,7 @@ import { LeggTilTing } from './components/handleliste/LeggTilTing.tsx';
 import { Login } from './components/login/Login.tsx';
 
 export const App = () => {
-  const { bruker, laster, signUp, signIn, signOut } = useBruker();
+  const { bruker, signUp, signIn, signOut } = useBruker();
   const [visFerdige, toggleVisFerdige] = useReducer(toggle, false);
   const { leggTilTing } = useHandleliste();
 
@@ -20,7 +20,7 @@ export const App = () => {
       </header>
 
       {!bruker ? (
-        !laster && <Login signUp={signUp} signIn={signIn} />
+        <Login signUp={signUp} signIn={signIn} />
       ) : (
         <>
           <article className="order-2 sm:order-1 box-border p-2">
