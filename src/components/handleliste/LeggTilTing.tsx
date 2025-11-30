@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { type FormObject, getFormData } from '../../utils/forms.ts';
 import type { HandlelisteMetoder } from '../../domene/handleliste/HandlelisteService.ts';
+import { PlussIkon } from '../ikoner/PlussIkon.tsx';
 
 interface LeggTilTingProps {
   leggTilTing: HandlelisteMetoder['leggTilTing'];
@@ -21,7 +22,7 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
 
   return (
     <form
-      className="flex gap-2"
+      className="flex items-start gap-1"
       autoComplete="off"
       onSubmit={(e) => {
         submit(getFormData(e));
@@ -36,9 +37,9 @@ const LeggTilTingComponent = ({ leggTilTing }: LeggTilTingProps) => {
       />
       <button
         type="submit"
-        className="w-10 rounded-none border-none bg-slate-300"
+        className="mr-1 w-8 border-none bg-transparent text-white"
       >
-        +
+        <PlussIkon />
       </button>
     </form>
   );
